@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item">{{ type.name }}</h1>
+<div class="center-item">
+    <a href="{{ path('creature.compendium') }}" class="button btn btn-secondary">Compendium</a>
+</div>
+<div class="chk-opt">
+	{% for type in types %}
+		<a href="{{ path('creature.compendium.type', { id: type.id }) }}" class="button btn btn-success">{{ type.name }}</a>
+	{% endfor %}
+</div>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message }}
+	</div>
+{% endif %}
+<div>
+    <table class="table table-center col-4 table-font">
+        <thead>
+            <tr>
+                <th colspan="6">Listes des créatures de type: {{ type.name }} ({{ creatures|length }})</th>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Taille</th>
+                <th>CR</th>
+                <th>Alignement</th>
+                <th>Source</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for creature in creatures %}
+            <tr>
+                <td title="{{ creature.source }} {{ creature.page }}"><strong>{{ creature.name }}</strong></td>
+                <td>{{ creature.size }}</td>
+                <td title="{{ creature.challenge }}">{{ challengeXP[creature.challenge] }}</td>
+                <td>{{ creature.alignment }}</td>
+                <td>{{ creature.source }} {{ creature.page }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}

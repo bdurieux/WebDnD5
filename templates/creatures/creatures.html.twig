@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item">Listes des créatures</h1>
+<h2 class="center-item">
+    {% if editMode %}
+        Modifier la créature
+    {% else %}
+        Nouvelle créature
+    {% endif %}
+</h2>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message|raw }}
+	</div>
+{% endif %}
+<div class="center-item">    
+    {{ form_start(formCreature) }}  
+    <div class="form-1 form-creature">
+        {# name #}
+        <div class="creature-name "> 
+            {{ form_row(formCreature.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+        </div>
+        {# taille #}
+        <div class="form-group creature-size center-item"> 
+            {{ form_row(formCreature.idSize,{'attr': {'class': "form-control"}, 'label' : "Size"})}}  
+        </div>
+        {# type #}
+        <div class="form-group creature-type center-item">   
+            {{ form_row(formCreature.idType,{'attr': {'class': "form-control"}, 'label' : "Type"})}}
+        </div>        
+        {# alignement #}
+        <div class="form-group creature-algmt center-item">   
+            {{ form_row(formCreature.idAlignment,{'attr': {'class': "form-control"}, 'label' : "Alignement"})}}
+        </div>
+        {# challenge #}
+        <div class="form-group creature-cr center-item">  
+            {{ form_row(formCreature.challenge,{'attr': {'class': "form-control"}, 'label' : "Challenge"})}} 
+        </div>
+        {# source #}
+        <div class="form-group creature-src center-item">   
+            {{ form_row(formCreature.idSource,{'attr': {'class': "form-control"}, 'label' : "Source"})}}
+        </div>
+        {# page #}
+        <div class="form-group creature-page center-item">  
+            {{ form_row(formCreature.page,{'attr': {'class': "form-control"}, 'label' : "Page"})}} 
+        </div>
+        {# submit #}
+        <div class="form-group creature-submit center-item">   
+            <button type="submit" class="btn btn-success" >
+                {% if editMode %}
+                    Sauver
+                {% else %}
+                    Ajouter
+                {% endif %}
+            </button>
+        </div>
+    </div>
+    {{ form_end(formCreature) }}
+    
+</div>
+{% if not editMode %}
+<div>
+    <table class="table table-center col-4 table-font">
+        <thead>
+            <tr>
+                <th colspan="6">Listes des créatures ({{ creatures|length }})</th>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Taille</th>
+                <th>CR</th>
+                <th>Alignement</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for creature in creatures %}
+            <tr>
+                <td title="{{ creature.source }} {{ creature.page }}"><strong>{{ creature.name }}</strong></td>
+                <td>{{ creature.type }}</td>
+                <td>{{ creature.size }}</td>
+                <td>{{ challengeXP[creature.challenge] }}</td>
+                <td>{{ creature.alignment }}</td>
+                <td class="inline-content">
+                    <div class="">
+                        <a href="{{ path('creature', { id: creature.id })}}" class="button btn btn-primary" >
+                        <strong>Modifier</strong>
+                        </a>               
+                    </div>
+                    <form method="post" class="">
+                        <div class="">   
+                            <input type="hidden" name="creature_del" value="{{ creature.id }}" />
+                        </div>
+                        <div class="">   
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

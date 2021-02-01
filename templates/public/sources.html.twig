@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item">Sources des créatures</h1>
+<div>
+    <table class="table table-center col-4 table-font">
+        <thead>
+            <tr>
+                <th colspan="4">Listes des sources ({{ sources|length }})</th>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <th>Label</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for source in sources %}
+            <tr>
+                <td><strong>{{ source.name }}</strong></td>
+                <td>{{ source.label }}</td>
+                <td class="inline-content">
+                    <div class="">
+                        <a href="{{ path('source', { id: source.id })}}" class="button btn btn-primary" >
+                        <strong>Modifier</strong>
+                        </a>               
+                    </div>
+                    <form method="post" class="">
+                        <div class="">   
+                            <input type="hidden" name="source_del" value="{{ source.id }}" />
+                        </div>
+                        <div class="">   
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<h2 class="center-item">Editeur de source</h2>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message|raw }}
+	</div>
+{% endif %}
+<div class="center-item">
+    <form method="post" class="form-1">
+        <div class="form-group src-name center-item">   
+            <label><strong>Source</strong></label>  
+            <input type="text" name="src_name" required class="form-control" />
+        </div>
+        <div class="form-group src-lbl center-item">   
+            <label><strong>Label</strong></label>  
+            <input type="text" name="src_label" required class="form-control" />
+        </div>
+        <div class="form-group src-submit">   
+            <input type="submit" value="Sauver" class="btn btn-success" />
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item">Alignement</h1>
+<h2 class="center-item">
+{% if editMode %}
+Modifier l'alignement
+{% else %}
+Nouvel Alignement
+{% endif %}
+</h2>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message|raw }}
+	</div>
+{% endif %}
+<div class="center-item">
+    <div class="form-1 form-sizes">
+    {{ form_start(formAlgmt) }}
+        <div class="form-group sz-name center-item"> 
+            {{ form_row(formAlgmt.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+        </div>
+        <div class="form-group sz-name center-item"> 
+            {{ form_row(formAlgmt.label, {'attr': {'placeholder': "Label", 'class': "form-control"}, 'label' : "Label"})}}
+        </div>
+        <div class="form-group sz-submit center-item">   
+            <button type="submit" class="btn btn-success" >
+                {% if editMode %}
+                Sauver
+                {% else %}
+                Ajouter
+                {% endif %}
+            </button>
+        </div>
+    {{ form_end(formAlgmt) }}
+    </div>
+</div>
+{% if not editMode %}
+<div>
+    <table class="table table-center col-4 table-font">
+        <thead>
+            <tr>
+                <th colspan="4">Listes des alignements ({{ alignments|length }})</th>
+            </tr>
+            <tr>
+                <th>Alignement</th>
+                <th>Label</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for alignment in alignments %}
+            <tr>
+                <td><strong>{{ alignment.name }}</strong></td>
+                <td>{{ alignment.label }}</td>
+                <td class="inline-content">
+                    <div class="">
+                        <a href="{{ path('alignment', { id: alignment.id })}}" class="button btn btn-primary" >
+                        <strong>Modifier</strong>
+                        </a>               
+                    </div>
+                    <form method="post" class="">
+                        <div class="">   
+                            <input type="hidden" name="alignment_del" value="{{ alignment.id }}" />
+                        </div>
+                        <div class="">   
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}
