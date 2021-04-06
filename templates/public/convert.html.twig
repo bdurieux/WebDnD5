@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item">Conversion</h1>
+<section>
+    <h2 id="distance" class="center-item">Convertisseur Longueur</h2>
+    <table class="table table-center" >
+        <thead>
+            <tr>
+                <th colspan="2">Convertisseur Longueur Métrique-Impérial</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Pouces <span class="english">(Inches)</span></td>
+                <td><input id="inputInches"  type="number" placeholder="Inches"
+                    oninput="lengthConverter(this.id,this.value)" onchange="lengthConverter(this.id
+                ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>cm <span class="english">(cm)</span></td>
+                <td><input id="inputcm"  type="number" placeholder="cm"
+                    oninput="lengthConverter(this.id,this.value)" onchange="lengthConverter(this.id
+                ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Pieds <span class="english">(Feet)</span></td>
+                <td><input id="inputFeet"  type="number" placeholder="Feet"
+                    oninput="lengthConverter(this.id,this.value)" onchange="lengthConverter(this.id
+                ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Mètres <span class="english">(Meters)</span></td>
+                <td><input id="inputMeters"  type="number" placeholder="Meters"
+                    oninput="lengthConverter(this.id,this.value)" onchange="lengthConverter(this.id
+                ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Yards</td>
+                <td><input id="inputYards"  type="number" placeholder="Yards"
+                    oninput="lengthConverter(this.id,this.value)" onchange="lengthConverter(this.id
+                    ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Kilomètres (Km)</td>
+                <td><input id="inputKilometers"  type="number" placeholder="Kilometers"
+                    oninput="lengthConverter(this.id,this.value)" onchange="lengthConverter(this.id
+                    ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Miles</td>
+                <td><input id="inputMiles"  type="number" placeholder="Miles"
+                    oninput="lengthConverter(this.id,this.value)" onchange="lengthConverter(this.id
+                ,this.value)"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<section>
+    <h2 id="masse" class="center-item">Convertisseur Masse</h2>
+    <table class="table table-center" >
+        <thead>
+            <tr>
+                <th colspan="2">Convertisseur Poids Métrique-Impérial</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Kg</td>
+                <td><input id="inputKg"  type="number" placeholder="Kg"
+                    oninput="weightConverter(this.id,this.value)" onchange="weightConverter(this.id
+                ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Livres <span class="english">(Pounds)</span></td>
+                <td><input id="inputLbs"  type="number" placeholder="lbs"
+                    oninput="weightConverter(this.id,this.value)" onchange="weightConverter(this.id
+                ,this.value)"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<section>
+    <h2 id="monnaie" class="center-item">Convertisseur Monnaie</h2>
+    <table class="table table_money table-center" >
+        <thead>
+            <tr>
+                <th colspan="2">Convertisseur Monnaie</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Platine<span class="english">(pp)</span></td>
+                <td><input id="inputPlatinum"  type="number" placeholder="pp"
+                    oninput="moneyConverter(this.id,this.value)" onchange="moneyConverter(this.id
+                ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Or <span class="english">(po)</span></td>
+                <td><input id="inputGold"  type="number" placeholder="po"
+                    oninput="moneyConverter(this.id,this.value)" onchange="moneyConverter(this.id
+                ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Electrum <span class="english">(pe)</span></td>
+                <td><input id="inputElectrum"  type="number" placeholder="pe"
+                    oninput="moneyConverter(this.id,this.value)" onchange="moneyConverter(this.id
+                ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Argent <span class="english">(pa)</span></td>
+                <td><input id="inputSilver"  type="number" placeholder="pa"
+                    oninput="moneyConverter(this.id,this.value)" onchange="moneyConverter(this.id
+                ,this.value)"></td>
+            </tr>
+            <tr>
+                <td>Cuivre <span class="english">(pc)</span></td>
+                <td><input id="inputCopper"  type="number" placeholder="pc"
+                    oninput="moneyConverter(this.id,this.value)" onchange="moneyConverter(this.id
+                ,this.value)"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/convert.js') }}"></script>
+{% endblock %}

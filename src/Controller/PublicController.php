@@ -4,114 +4,92 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\Framework\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Source;
 use App\Repository\SourceRepository;
 
 class PublicController extends AppController{
-    
+    const BASE_TITLE = "Zgrouf - DnD5 ";
+    /**
+     * @Route("/", name="home")
+     */
+    public function home(){
+        $subtitle = "- Index";
+        $title = self::BASE_TITLE . $subtitle;        
+
+        return $this->render('public/home.html.twig',[
+            'title' => $title
+        ]);
+    }
+
+    /**
+     * @Route("/convert", name="convert")
+     */
+    public function convert(){
+        $subtitle = "Convertisseur";
+        $title = self::BASE_TITLE . $subtitle;        
+
+        return $this->render('public/convert.html.twig',[
+            'title' => $title
+        ]);
+    }
+
     /**
      * @Route("/sources", name="sources")
+     * @Route("/sources/{id}", name="source")
      */
-    public function sources(SourceRepository $srcRepo){
-        $subtitle = "Sources";
-        $title = "Zgrouf - DnD5 - " . $subtitle;
+    public function sources($id = null,
+                              Request $request,
+                              SourceRepository $sourceRepo){
+        $subtitle = "- Sources";
+        $title = self::BASE_TITLE. $subtitle;
         $message = '';
-        
-        if(isset($_POST)){
+        $sources = $sourceRepo->findBy(array(),array('name' => 'ASC','official' => 'DESC'));
+
+        if($id === null){
             $source = new Source();
-            if(isset($_POST['src_name'])){     // Ajout d'une source
-                // vérification de la validité des champs
-                $message = $this->checkSource($_POST);
-                if(empty($message)){
-                    //vérification de l'unicité du name                
-                    $response = $srcRepo->findOneByName(array('name' => $_POST['src_name']));
-                    if($response){
-                        $message = "Une source avec ce nom existe déjà.";
-                    }else{
-                        // on ajoute la nouvelle source en bdd
-                        $entityManager = $this->getDoctrine()->getManager();
-                        $source->setName($this->secureData($_POST['src_name']))
-                             ->setLabel($this->secureData($_POST['src_label']));
-                        $entityManager->persist($source);
-                        $entityManager->flush();
-                    }
-                }                
-            }elseif(isset($_POST['source_del'])){       // suppression d'une source
-                $entityManager = $this->getDoctrine()->getManager();
-                $source = $srcRepo->findOneById(array('name' => $_POST['source_del']));
-                if($source){
-                    $entityManager->remove($source);
-                    $entityManager->flush();
-                }
+        }else{  // recuperation de la source correspondante
+            $source = $sourceRepo->findOneById(array('id' => $id));
+        }      
+
+        $entityManager = $this->getDoctrine()->getManager();
+        // création du formulaire
+        $formSource = $this->createFormBuilder($source)
+                          ->add('name')
+                          ->add('label')
+                          ->add('official', ChoiceType::class, [
+                              'choices' => ['Oui' => '1','Non' => '0'],
+                              'multiple'=>false,
+                              'expanded'=>true
+                              ])
+                          ->getForm();
+        $formSource->handleRequest($request);
+        // update ou new
+        if($formSource->isSubmitted() && $formSource->isValid()){            
+            if($source->getId() === null){  // new                          
+                $entityManager->persist($source);
             }
-        }        
-        $sources = $srcRepo->findBy(array(),array('name' => 'ASC'));
+            $entityManager->flush();
+            return $this->redirectToRoute('source');
+        }
+        // suppression d'une source
+        if(isset($_POST['source_del'])){       
+            $source = $sourceRepo->findOneById(array('id' => $_POST['source_del']));
+            if($source){
+                $entityManager->remove($source);
+                $entityManager->flush();
+            }
+        }
+        // récupération de la liste des sources à jour
+        $sources = $sourceRepo->findBy(array(),array('official' => 'DESC','name' => 'ASC'));    
+        
         return $this->render('public/sources.html.twig',[
             'message' => $message,
             'title' => $title,
-            'sources' => $sources
+            'sources' => $sources,
+            'formSource' => $formSource->createView(),
+            'editMode' => $source->getId() !== null
         ]);
     }
-
-
-    /**
-     * @Route("/sources/{id}", name="source")
-     */
-    public function source($id,SourceRepository $srcRepo){
-        $subtitle = "Source";
-        $message = '';
-        $source = $srcRepo->findOneById(array('id' => $id));        
-        if($source !== null){
-            $subtitle = $source->getName();
-        }else{
-            // redirection vers notFound
-            return $this->redirectToRoute('notFound');
-        }
-        if(isset($_POST['src_name'])){
-            // vérification de la validité du nouveau nom
-            $message = $this->checkSource($_POST);
-            if(empty($message)){
-                // vérification de l'unicité
-                $existingSrc = $srcRepo->findOneByName(array('name' => $_POST['src_name']));
-                $existingLbl = $srcRepo->findOneByName(array('label' => $_POST['src_label']));
-                if($existingSrc != null and ($existingSrc->getId() != $id)){
-                    $message = "Nom de source déjà utilisé";
-                }elseif($existingLbl != null and ($existingLbl->getId() != $id)){
-                    $message = "Label déjà utilisé";
-                }else{
-                    // update de la modification
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $source->setName($this->secureData($_POST['src_name']))
-                         ->setLabel($this->secureData($_POST['src_label']));
-                    $entityManager->flush();
-                    return $this->redirectToRoute('sources');
-                }                
-            }else{
-                $message = "Nom/label invalide";
-            }            
-        }
-        $formSrc = $this->createFormBuilder($source)
-                     ->add('name')
-                     ->add('label')
-                     ->getForm();
-        $title = "Zgrouf - DnD5 - " . $subtitle;
-        return $this->render('public/source.html.twig',[
-            'message' => $message,
-            'title' => $title,
-            'source' => $source,
-            'formSrc' => $formSrc->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/{slug}", name="notFound")
-     */
-    /* public function home(){
-        $subtitle = "Page introuvable";
-        $title = "Zgrouf - DnD5 - " . $subtitle;        
-
-        return $this->render('public/notFound.html.twig',[
-            'title' => $title
-        ]);
-    } */
 }

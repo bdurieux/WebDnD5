@@ -35,6 +35,13 @@ class Source
      */
     private $label;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="official", type="boolean", nullable=false)
+     */
+    private $official = '0';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +67,18 @@ class Source
     public function setLabel(string $label): self
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    public function getOfficial(): ?bool
+    {
+        return $this->official;
+    }
+
+    public function setOfficial(bool $official): self
+    {
+        $this->official = $official;
 
         return $this;
     }

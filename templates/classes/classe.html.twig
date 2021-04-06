@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item" title="{{ classe.idsource.name }} {{ classe.page }}">{{ classe.name }}</h1>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message|raw }}
+	</div>
+{% endif %}
+<h2>{{ classe.description }}</h2>
+<div>
+	<table class="table table-XL">
+		<tr>
+			<td><strong>Dés de vie</strong></td>
+			<td>{{ classe.hitDice }}</td>
+		</tr>
+		<tr>
+			<td><strong>Armures</strong></td>
+			<td>{{ classe.armors }}</td>
+		</tr>
+		<tr>
+			<td><strong>Armes</strong></td>
+			<td>{{ classe.weapons }}</td>
+		</tr>
+		<tr>
+			<td><strong>Outils</strong></td>
+			<td>{{ classe.tools }}</td>
+		</tr>
+		<tr>
+			<td><strong>Jets de Sauvegarde</strong></td>
+			<td>{{ classe.saves }}</td>
+		</tr>
+		<tr>
+			<td><strong>Compétences</strong></td>
+			<td>{{ classe.skills }}</td>
+		</tr>
+	</table>
+</div>
+<h2 id="liste">Liste des spécialisations disponibles</h2>
+<div class="btn-list">
+    {% for subClass in subClasses %}
+        <a href="#subclass_{{ subClass.id }}" class="button btn btn-secondary">{{ subClass.name }}</a>
+    {% endfor %}
+</div>
+{% for subClass in subClasses %}
+	<h3 id="subclass_{{ subClass.id }}" title="{{ subClass.source_name }} {{ subClass.page }}">{{ subClass.name }}</h3>
+	<h4>{{ subClass.description }}</h4>
+	<ul>
+	{% for subclasstrait in subclasstraits %}
+		{% if subclasstrait.id_subclass == subClass.id %}
+		<li><strong>Niveau {{ subclasstrait.level }} - {{ subclasstrait.name }}: </strong><p>{{ subclasstrait.description }}</p></li>
+		{% endif %}
+	{% endfor %}
+	</ul>
+	<p><a href="#liste" class="button btn btn-secondary">Index</a></p>
+{% endfor %}
+
+{% endblock %}
+

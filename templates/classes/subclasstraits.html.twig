@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>Traits de Sous-classes</h1>
+<h2 class="center-item">
+    <button class="btn btn-secondary" onclick="toggleForm()">
+    {% if editMode %}
+        Modifier le trait
+    {% else %}
+        Nouveau trait
+    {% endif %}
+    </button>
+</h2>
+<div class="center-item" id="filter-form">
+{{ form_start(formSubclassTrait) }}  
+    <div class="form-1 form-trait center-item">
+        {# name #}
+        <div class="trait-name"> 
+            {{ form_row(formSubclassTrait.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+        </div>
+        {# level #}
+        <div class="trait-lvl">   
+            {{ form_row(formSubclassTrait.level,{'attr': {'class': "form-control"}, 'label' : "Niveau"})}}
+        </div>
+        {# soubclass #}
+        <div class="trait-subclass">   
+            {{ form_row(formSubclassTrait.idSubclass,{'attr': {'class': "form-control"}, 'label' : "Sous classe"})}}
+        </div>
+        {# description #}
+        <div class="trait-desc"> 
+            {{ form_row(formSubclassTrait.description,{'attr': {'class': "form-control"}, 'label' : "Description"})}}  
+        </div>        
+        {# submit #}
+        <div class="trait-submit">   
+            <button type="submit" class="btn btn-success" >
+                    Ajouter
+            </button>
+        </div>
+    </div>
+    {{ form_end(formSubclassTrait) }}
+</div>
+{% if not editMode %}
+<div>
+    <table class="table table-center table-XL">
+        <thead>
+            <tr>
+                <th colspan="5">Listes des traits de sous-classes ({{ subclasstraits|length }})</th>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Niveau</th>
+                <th>Classe</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subclasstrait in subclasstraits %}
+            <tr>
+                <td><strong>{{ subclasstrait.name }}</strong></td>
+                <td>{{ subclasstrait.level }}</td>
+                <td title="{{ subclasstrait.class_name }}">{{ subclasstrait.subclass_name }}</td>
+                <td>{{ subclasstrait.description }}</td>                
+                <td class="inline-content">
+                    <div class="">
+                        <a href="{{ path('class.subclasstrait', { id: subclasstrait.id })}}" class="button btn btn-primary" >
+                        <strong>Modifier</strong>
+                        </a>               
+                    </div>
+                    <form method="post" class="">
+                        <div class="">   
+                            <input type="hidden" name="subclasstrait_del" value="{{ subclasstrait.id }}" />
+                        </div>
+                        <div class="">   
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}

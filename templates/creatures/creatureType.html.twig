@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<h1 class="center-item">Sources</h1>
+<h1 class="center-item">Types</h1>
 <h2 class="center-item">
     <button class="btn btn-secondary" onclick="toggleForm()">
     {% if editMode %}
-        Modifier la source
+        Modifier le type
     {% else %}
-        Nouvelle source
+        Nouveau Type
     {% endif %}
     </button>
 </h2>
@@ -16,68 +16,48 @@
 	</div>
 {% endif %}
 <div class="center-item" id="filter-form">
-{{ form_start(formSource) }}  
-    <div class="form-1 form-src center-item">
-        {# name #}
-        <div class=""> 
-            {{ form_row(formSource.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+    <div class="form-1 form-types" style="margin:auto">
+    {{ form_start(formType) }}
+        <div class=" tp-name"> 
+            {{ form_row(formType.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
-        {# label #}
-        <div class=""> 
-            {{ form_row(formSource.label,{'attr': {'class': "form-control"}, 'label' : "Label"})}}  
-        </div>
-        {# official #}
-        <div class="">   
-            {{ form_row(formSource.official,{'attr': {'class': "form-control"}, 'label' : "Officiel"})}}
-        </div>   
-        {# submit #}
-        <div class="">   
+        <div class="form-group tp-submit center-item">   
             <button type="submit" class="btn btn-success" >
                 {% if editMode %}
-                    Sauver
+                Sauver
                 {% else %}
-                    Ajouter
+                Ajouter
                 {% endif %}
             </button>
         </div>
+    {{ form_end(formType) }}
     </div>
-    {{ form_end(formSource) }}
 </div>
 {% if not editMode %}
 <div>
     <table class="table table-center col-4 table-font">
         <thead>
             <tr>
-                <th colspan="4">Listes des sources ({{ sources|length }})</th>
+                <th colspan="2">Listes des types ({{ types|length }})</th>
             </tr>
             <tr>
-                <th>Source</th>
-                <th>Label</th>
-                <th>Officiel</th>
+                <th>Type</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-        {% for source in sources %}
+        {% for type in types %}
             <tr>
-                <td><strong>{{ source.name }}</strong></td>
-                <td>{{ source.label }}</td>
-                <td>
-                {% if source.official %}
-                    Oui
-                {% else %}
-                    Non
-                {% endif %}
-                </td>
+                <td><strong>{{ type.name }}</strong></td>
                 <td class="inline-content">
                     <div class="">
-                        <a href="{{ path('source', { id: source.id })}}" class="button btn btn-primary" >
+                        <a href="{{ path('type', { id: type.id })}}" class="button btn btn-primary" >
                         <strong>Modifier</strong>
                         </a>               
                     </div>
                     <form method="post" class="">
                         <div class="">   
-                            <input type="hidden" name="source_del" value="{{ source.id }}" />
+                            <input type="hidden" name="type_del" value="{{ type.id }}" />
                         </div>
                         <div class="">   
                             <input type="submit" value="Supprimer" class="btn btn-danger" />

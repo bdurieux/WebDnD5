@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item" id="top" title="{{ feats|length }}">Dons</h1>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message|raw }}
+	</div>
+{% endif %}
+<div class="btn-list">
+    {% for feat in feats %}
+        <a href="#feat_{{ feat.id }}" class="button btn btn-secondary">{{ feat.name }}</a>
+    {% endfor %}
+</div>
+<div>
+    {% for feat in feats %}
+        <div class="feat-header" id="feat_{{ feat.id }}">
+            <div>
+                <h2 title="{{ feat.source }} {{ feat.page }}">{{ feat.name }}</h2>
+            </div>
+            <div>
+                <p>{{ feat.source }} {{ feat.page }}</p>
+            </div>
+        </div>        
+        {% if feat.prerequisite|length > 1 %}
+            <p><em><strong>Prérequis:</strong> {{ feat.prerequisite }}</em></p>
+        {% endif %}
+        <p>{{ feat.description|raw }}</p>
+        <p><a href="#top" class="">Haut de page</a></p>
+    {% endfor %}    
+</div>
+{% endblock %}

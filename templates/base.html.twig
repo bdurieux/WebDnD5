@@ -18,19 +18,31 @@
                 <ul>
                     <li><a href="{{ path('home') }}">Accueil</a></li>
                     <li class="dropdown">
-                        <a href="" class="dropbtn">Créatures</a>
+                        <a href="" class="dropbtn">Règles</a>
                         <div class="dropdown-content">
-                            <a href="{{ path('alignments') }}">Alignement</a>
+                            <a href="{{ path('classes') }}">Classes</a>
+                            <a href="{{ path('dons') }}">Dons</a>                            
+                            <a href="{{ path('feats') }}">Editeur Dons</a>
+                            <a href="{{ path('class.options') }}">Editeur Options</a>
+                            <a href="{{ path('class.subclasses') }}">Editeur Sous-classes</a>
+                            <a href="{{ path('class.subclasstraits') }}">Editeur Traits</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="" class="dropbtn">Créatures</a>
+                        <div class="dropdown-content">                        
                             <a href="{{ path('creature.compendium') }}">Compendium</a>
-                            <a href="{{ path('creatures') }}">Editeur</a>
-                            <a href="{{ path('creature.sizes') }}">Tailles</a>
-                            <a href="{{ path('creature.types') }}">Types</a>
+                            <a href="{{ path('alignments') }}">Editeur Alignement</a>
+                            <a href="{{ path('creatures') }}">Editeur Créatures</a>
+                            <a href="{{ path('creature.sizes') }}">Editeur Tailles</a>
+                            <a href="{{ path('creature.types') }}">Editeur Types</a>
                         </div>
                     </li>
                     <li class="dropdown">
                         <a href="" class="dropbtn">Divers</a>
                         <div class="dropdown-content">
-                            <a href="{{ path('sources') }}">Sources</a>
+                            <a href="{{ path('convert') }}">Convertisseur</a>
+                            <a href="{{ path('sources') }}">Editeur Sources</a>
                         </div>
                     </li>
                 </ul>

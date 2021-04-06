@@ -1,0 +1,253 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h2 class="center-item">
+    <button class="btn btn-secondary" onclick="toggleForm()">
+        Nouvelle classe
+    </button>
+</h2>
+<div class="center-item" id="filter-form">
+{{ form_start(formClasse) }}  
+    <div class="form-1 form-src center-item">
+        {# name #}
+        <div class=""> 
+            {{ form_row(formClasse.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+        </div>
+        {# description #}
+        <div class=""> 
+            {{ form_row(formClasse.description,{'attr': {'class': "form-control"}, 'label' : "Description"})}}  
+        </div>
+        {# armors #}
+        <div class="">   
+            {{ form_row(formClasse.armors,{'attr': {'class': "form-control"}, 'label' : "Armures"})}}
+        </div>  
+        {# weapons #}
+        <div class="">   
+            {{ form_row(formClasse.weapons,{'attr': {'class': "form-control"}, 'label' : "Armes"})}}
+        </div>
+        {# tools #}
+        <div class="">   
+            {{ form_row(formClasse.tools,{'attr': {'class': "form-control"}, 'label' : "Outils"})}}
+        </div>
+        {# saves #}
+        <div class="">   
+            {{ form_row(formClasse.saves,{'attr': {'class': "form-control"}, 'label' : "Sauvegardes"})}}
+        </div>
+        {# skills #}
+        <div class="">   
+            {{ form_row(formClasse.skills,{'attr': {'class': "form-control"}, 'label' : "Compétences"})}}
+        </div>
+        {# hit_dice #}
+        <div class="">   
+            {{ form_row(formClasse.hit_dice,{'attr': {'class': "form-control"}, 'label' : "Dés de Vie (BUG)"})}}
+        </div>
+        {# source #}
+        <div class="form-group creature-src center-item">   
+            {{ form_row(formClasse.idSource,{'attr': {'class': "form-control"}, 'label' : "Source"})}}
+        </div>
+        {# page #}
+        <div class="form-group creature-page center-item">  
+            {{ form_row(formClasse.page,{'attr': {'class': "form-control"}, 'label' : "Page"})}} 
+        </div>             
+        {# submit #}
+        <div class="">   
+            <button type="submit" class="btn btn-success" >
+                    Ajouter
+            </button>
+        </div>
+    </div>
+    {{ form_end(formClasse) }}
+</div>
+<div >
+    <section id="section_source">
+        <h2>Sources</h2>
+        <form id="source-form" class="">
+            Choisissez les sources à utiliser:
+            <ul>
+                <li><input id="chb_phb" type="checkbox" checked value="PHB"><b><label for="chb_phb">PHB</label></b></li>
+                <li><input id="chb_tce" type="checkbox" checked value="TCE"><b><label for="chb_tce">TCE/ERLW</label></b></li>
+                <li><input id="chb_botd" type="checkbox" value="BOTD"><b><label for="chb_botd" class="unofficial">BotD</label></b></li>
+                <li><input id="chb_ppkc" type="checkbox" value="PPKC"><b><label for="chb_ppkc" class="unofficial">PPKC</label></b></li>
+            </ul>
+            <input type="button" id="sourceClick" value="Valider" onclick="getClassBySource()" />
+        </form>
+        <p class="unofficial">Non officiel</p>
+    </section>
+</div>
+<div>
+    <section>
+        <h2>Table des Classes</h2>
+        <table id="table_classe" class="table table-center" >
+            <thead>
+                <tr>
+                    <th>Classe</th>
+                    <th>Description</th>
+                    <th>Caractéristique principale</th>
+                    <th>Dé de vie</th>
+                    <th>Sauvegarde</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+        <button onclick="toggleElement(src)" class="btn btn-secondary">Source:</button>
+        <div id="src">
+            <p>survoler le nom de la classe pour connaitre la source.
+                <ul>
+                {% for source in sources %}
+                    <li {% if source.official == 0 %}
+                            class="unofficial"
+                        {% endif %}><strong>{{ source.label }}: </strong>{{ source.name }}</li>
+                {% endfor %}
+                </ul>
+            </p>
+        </div>
+    </section>
+    <section>
+        <h2>Styles de combat</h2>
+        <p title="PHB 72"><strong>Archery: </strong>+2 aux jets d'attaque avec des armes à distance.</p>
+        <p title="TCE 53"><strong>Blessed Warrior: </strong>apprend 2 tour de magie (clerc) (basé sur Cha).</p>
+        <p title="TCE 41"><strong>Blind Fighting: </strong>blindsight (3m).</p>
+        <p title="PHB 72"><strong>Defense: </strong>+1 CA quand vous portez une armure.</p>
+        <p title="TCE 58"><strong>Druidic Warrior: </strong>apprend 2 tour de magie (druide) (basé sur Sag).</p>
+        <p title="PHB 72"><strong>Duelling: </strong>+2 aux dégâts avec une arme de mêlée tenue à 1 main et aucune autre arme.</p>
+        <p title="PHB 72"><strong>Great Weapon Fighting: </strong>en maniant une arme à 2 main, relancez les 1-2 obtenu sur les dégâts (1 seul reroll).</p>
+        <p title="TCE 41"><strong>Interception: </strong>réduit les dégâts de [1d10+bn maitrise] sur une attaque contre une cible à 1,5m de vous si vous maniez un bouclier ou une arme de mêlée.</p>
+        <p title="PHB 72"><strong>Protection: </strong>impose désavantage sur une attaque contre une cible à 1,5m de vous si vous maniez un bouclier.</p>
+        <p title="TCE 41"><strong>Superior Technique: </strong>vous apprenez 1 manoeuvre de Battlemaster et 1 dé de supériorité (d6) que vous récupérez après un repos.</p>
+        <p title="TCE 42"><strong>Thrown Weapon Fighting: </strong>les armes avec la propriété lancer peuvent être dégainer en même temps que l'action d'attaque. +2 aux dégâts avec les armes de lancer.</p>
+        <p title="PHB 72"><strong>Two-weapon Fighting: </strong>en combat à 2 armes, vous pouvez ajouter votre bn de caractéristique aux dégâts des 2 mains.</p>
+        <p title="TCE 42"><strong>Unarmed Fighting: </strong>vos attaques à mains nues infligent 1d6+[bn For]. Si vous n'avez aucune autre arme ou bouclier, les dégâts passent à 1d8+[bn For]. Au début de vos tours, vous pouvez infliger 1d4 dégâts contondants à une créature qui est en lutte avec vous.</p>
+        <table id="table_fighting_style" class="table table-center table-large" >
+            <thead>
+                <tr>
+                    <th colspan="4">Style de combat par classe</th>
+                </tr>
+                <tr>
+                    <th>Style</th>
+                    <th>Fighter</th>
+                    <th>Paladin</th>
+                    <th>Ranger</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Archery</td>
+                    <td>X</td>
+                    <td></td>
+                    <td>X</td>
+                </tr>
+                <tr>
+                    <td>Blessed Warrior</td>
+                    <td></td>
+                    <td>X</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Blind Fighting</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td>X</td>
+                </tr>
+                <tr>
+                    <td>Defense</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td>X</td>
+                </tr>
+                <tr>
+                    <td>Druidic Warrior</td>
+                    <td></td>
+                    <td></td>
+                    <td>X</td>
+                </tr>
+                <tr>
+                    <td>Duelling</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Great Weapon Fighting</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Interception</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Protection</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Superior Technique</td>
+                    <td>X</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Trown Weapon Fighting</td>
+                    <td>X</td>
+                    <td></td>
+                    <td>X</td>
+                </tr>
+                <tr>
+                    <td>Two-weapon Fighting</td>
+                    <td>X</td>
+                    <td></td>
+                    <td>X</td>
+                </tr>
+                <tr>
+                    <td>Unarmed Fighting</td>
+                    <td>X</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h2>Manoeuvres de combat</h2>
+        <p>Utiliser une manoeuvre nécessite de dépenser 1 dé de supériorité.</p>
+        <p>Si un JS est nécessaire: <strong> DD = 8 + [bn maitrise] + [bn For/Dex]</strong>.</p>
+        <p>Liste des manoeuvres:
+            <ul>
+                <li title="TCE 43"><strong>Ambush: </strong></li>
+                <li title="TCE 43"><strong>Bait and Switch: </strong></li>
+                <li title="TCE 43"><strong>Brace: </strong></li>
+                <li title="PHB 74"><strong>Commander's Strike: </strong></li>
+                <li title="TCE 43"><strong>Commanding Presence: </strong></li>
+                <li title="PHB 74"><strong>Disarming Attack: </strong></li>
+                <li title="PHB 74"><strong>Distracting Strike: </strong></li>
+                <li title="PHB 74"><strong>Evasive Footwork: </strong></li>
+                <li title="PHB 74"><strong>Feinting Attack: </strong></li>
+                <li title="PHB 74"><strong>Goading Attack: </strong></li>
+                <li title="TCE 43"><strong>Grappling Strike: </strong></li>
+                <li title="PHB 74"><strong>Lunging Attack: </strong></li>
+                <li title="PHB 74"><strong>Maneuvering Attack: </strong></li>
+                <li title="PHB 74"><strong>Menacing Attack: </strong></li>
+                <li title="PHB 74"><strong>Parry: </strong></li>
+                <li title="PHB 74"><strong>Precision Attack: </strong></li>
+                <li title="PHB 74"><strong>Pushing Attack: </strong></li>
+                <li title="TCE 43"><strong>Quick Toss: </strong></li>
+                <li title="PHB 74"><strong>Rally: </strong></li>
+                <li title="PHB 74"><strong>Riposte: </strong></li>
+                <li title="PHB 74"><strong>Sweeping Attack: </strong></li>
+                <li title="TCE 43"><strong>Tactical Assesment: </strong></li>
+                <li title="PHB 74"><strong>Trip Attack: </strong></li>
+            </ul>
+        </p>
+    </section>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/classe.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}" defer></script>
+{% endblock %}

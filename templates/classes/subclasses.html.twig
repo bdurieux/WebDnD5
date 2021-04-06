@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>Sous-classes</h1>
+<h2 class="center-item">
+    <button class="btn btn-secondary" onclick="toggleForm()">
+    {% if editMode %}
+        Modifier la sous-classe
+    {% else %}
+        Nouvelle sous-classe
+    {% endif %}
+    </button>
+</h2>
+<div class="center-item" id="filter-form">
+{{ form_start(formSubclass) }}  
+    <div class="form-1 form-sub">
+        {# name #}
+        <div class="sub-name"> 
+            {{ form_row(formSubclass.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+        </div>
+        {# description #}
+        <div class="sub-desc"> 
+            {{ form_row(formSubclass.description,{'attr': {'class': "form-control"}, 'label' : "Description"})}}  
+        </div>
+        {# class #}
+        <div class="sub-class">   
+            {{ form_row(formSubclass.idClass,{'attr': {'class': "form-control"}, 'label' : "Classe"})}}
+        </div>
+        {# source #}
+        <div class="sub-src">   
+            {{ form_row(formSubclass.idSource,{'attr': {'class': "form-control"}, 'label' : "Source"})}}
+        </div>
+        {# page #}
+        <div class="sub-page">  
+            {{ form_row(formSubclass.page,{'attr': {'class': "form-control"}, 'label' : "Page"})}} 
+        </div>             
+        {# submit #}
+        <div class="sub-ok">   
+            <button type="submit" class="btn btn-success" >
+                    Ajouter
+            </button>
+        </div>
+    </div>
+    {{ form_end(formSubclass) }}
+</div>
+{% if not editMode %}
+<div>
+    <table class="table table-center table-XL table-font">
+        <thead>
+            <tr>
+                <th colspan="4">Listes des sous-classes ({{ subclasses|length }})</th>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Classe</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subclass in subclasses %}
+            <tr>
+                <td title="{{ subclass.source_label }} {{ subclass.page }}"><strong>{{ subclass.name }}</strong></td>
+                <td>{{ subclass.description }}</td>
+                <td>{{ subclass.class_name }}</td>
+                <td class="inline-content">
+                    <div class="">
+                        <a href="{{ path('class.subclass', { id: subclass.id })}}" class="button btn btn-primary" >
+                        <strong>Modifier</strong>
+                        </a>               
+                    </div>
+                    <form method="post" class="">
+                        <div class="">   
+                            <input type="hidden" name="subclass_del" value="{{ subclass.id }}" />
+                        </div>
+                        <div class="">   
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}

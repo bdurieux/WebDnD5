@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item">Dons</h1>
+<h2 class="center-item">
+    <button class="btn btn-secondary" onclick="toggleForm()">
+    {% if editMode %}
+        Modifier le don
+    {% else %}
+        Nouveau don
+    {% endif %}
+    </button>
+</h2>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message|raw }}
+	</div>
+{% endif %}
+<div class="center-item" id="filter-form" >
+    {{ form_start(formFeat) }}
+    <div class="form-1 form-feat">    
+        {# name #}
+        <div class="feat-name"> 
+            {{ form_row(formFeat.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+        </div>
+        {# source #}
+        <div class="feat-src">   
+            {{ form_row(formFeat.idSource,{'attr': {'class': "form-control"}, 'label' : "Source"})}}
+        </div>
+        {# page #}
+        <div class="feat-page">  
+            {{ form_row(formFeat.page,{'attr': {'placeholder': "Page", 'class': "form-control"}, 'label' : "Page"})}} 
+        </div>
+        {# prerequisite #}
+        <div class="feat-prereq"> 
+            {{ form_row(formFeat.prerequisite,{'attr': { 'placeholder': "Prérequis", 'class': "form-control"}, 'label' : "Prérequis"})}}
+        </div>
+        {# description #}
+        <div class="feat-desc"> 
+            {{ form_row(formFeat.description,{'attr': { 'placeholder': "Description", 'class': "form-control"}, 'label' : "Description"})}}
+        </div>        
+        {# submit #}
+        <div class="feat-submit">   
+            <button type="submit" class="btn btn-success" >
+                {% if editMode %}
+                    Sauver
+                {% else %}
+                    Ajouter
+                {% endif %}
+            </button>
+        </div>
+    </div>
+    {{ form_end(formFeat) }}
+</div>
+{% if not editMode %}
+<div>
+    <table class="table table-center col-3 table-XL table-font">
+        <thead>
+            <tr>
+                <th colspan="3">Listes des dons ({{ feats|length }})</th>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Prérequis</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for feat in feats %}
+            <tr>
+                <td title="{{ feat.source }} {{ feat.page }}"><strong>{{ feat.name }}</strong></td>
+                <td>{{ feat.prerequisite }}</td>
+                <td class="inline-content center-item">
+                    <div class="">
+                        <a href="{{ path('feat', { id: feat.id })}}" class="button btn btn-primary" >
+                        <strong>Modifier</strong>
+                        </a>               
+                    </div>
+                    <form method="post" class="">
+                        <div class="">   
+                            <input type="hidden" name="feat_del" value="{{ feat.id }}" />
+                        </div>
+                        <div class="">   
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}

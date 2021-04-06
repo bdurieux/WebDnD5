@@ -4,8 +4,38 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ZgroufRepository;
+use App\Entity\Zgrouf;
 
 class AppController extends AbstractController{
+
+	/**
+	*	vérifie le mot de passe fourni avec celui en base de donnée
+	*	@param $username
+	*	@param $password
+	*	@return boolean renvoie true si le mot de passe correspond
+	*/
+	public function checkLogin($username, $password, $session, ZgroufRepository $accountRepo){
+        $user = new Zgrouf();
+        $response = $accountRepo->findOneByUsername($username);
+        if($response){
+            $user = $response;
+        }
+		if ($user->getId() !== null) {
+			if(password_verify($password,$user->getPassword())){
+				$session->set('auth',$user->getId());
+				return true;
+			}			
+		}
+		return false;
+    }
+
+	/**
+	 * vérifie si l'utilisateur est connecté
+	 */
+	public function logged(SessionInterface $session){
+		return $session->get('auth') !== null;
+    }
 
      /**
 	 * nettoie une chaine de caractère
@@ -30,6 +60,38 @@ class AppController extends AbstractController{
             'title' => $title
         ]);
     }
+
+    /**
+	 * formate un texte en ajoutant des <li></li> si un ':' est suivi de ';'
+	 * @param $text le texte à formatter
+	 * @return
+	 */
+	protected function formatText($text){
+		$html = "";
+		$pattern = "#:+(.+;+).+#";
+		if (preg_match($pattern, $text)){
+			// on décompose le text en phrase
+			$parts = explode(".",$text);
+			foreach($parts as $part){		
+				if(preg_match($pattern, $part)){
+					$pieces = explode(':',$part);
+					$debut = $pieces[0];
+					$reste = substr($part, strlen($debut)+1);
+					$ul = explode(';', $reste);
+					$html .= $debut . '<ul>';
+					foreach ($ul as $li) {
+						$html .= '<li>' . $li . '</li>';
+					}
+					$html .= '</ul>';
+				}else{
+					$html .= $part . '.';
+				}
+			}
+		}else{
+			$html = $text;
+		}
+		return $html;
+	}
 
     /**
      * vérifie la validité d'un nom
@@ -93,21 +155,6 @@ class AppController extends AbstractController{
         }elseif(strlen($this->secureData($_POST['src_label'])) > 8){
             $message = "Label trop long.";
         }
-		return $message;
-    }
-    
-    /**
-	 * vérifie la validité des paramètres de créature
-	 * @param param
-	 * @return string message 
-	 */
-	protected function checkCreature($params){
-		$message = "";
-		
-		if(isset($_POST['creature_name'])){
-			$message .= $this->checkName($_POST['creature_name']);
-		}
-		
 		return $message;
     }
 }

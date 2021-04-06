@@ -1,0 +1,119 @@
+[
+    {
+        "parentClass": "Barbarian",
+        "name": "Berserker",
+        "description": "Entre en frénésie sanguinaire quand il se bat (basé sur la Sagesse).",
+        "traits": [
+            {
+                "parentSubClass": "Berserker",
+                "name": "Frenzy",
+                "level": 3,
+                "description": "En rage, vous pouvez entrer en frénésie (action bonus pour porter 1 attaque supplémentaire). A la fin de la frénésie, JS Con [DD = 10 + nb rd en frénésie] pour éviter de gagner 1 niveau d'épuisement."
+            },
+            {
+                "parentSubClass": "Berserker",
+                "name": "Mindless Rage",
+                "level": 6,
+                "description": "En rage vous êtes immunisé aux effets de charme."
+            },
+            {
+                "parentSubClass": "Berserker",
+                "name": "Intimidating Presence",
+                "level": 10,
+                "description": "Action pour effrayé 1 cible à moins de 9 m (JS Sag, annule)."
+            },
+            {
+                "parentSubClass": "Berserker",
+                "name": "Retaliation",
+                "level": 14,
+                "description": "Reaction quand subit des dégâts pour faire 1 attaque contre l'attaquant si à moins d'1,5 m."
+            }
+        ],
+        "source": "PHB",
+        "official": true
+    },
+    {
+        "parentClass": "Barbarian",
+        "name": "Totem Warrior",
+        "description": "Fait appel à l'esprit animal de sa tribu pour l'aider.",
+        "traits": [
+            {
+                "parentSubClass": "Totem Warrior",
+                "name": "Spirit Seeker",
+                "level": 3,
+                "description": "Peut lancer 'beast sense' & 'speak with animals' sous forme de rituel."
+            },
+            {
+                "parentSubClass": "Totem Warrior",
+                "name": "Totem Spirit",
+                "level": 3,
+                "description": "Choisissez 1 esprit totem (aigle, loup, ours) qui améliore les effets de votre rage."
+            },
+            {
+                "parentSubClass": "Totem Warrior",
+                "name": "Aspect of the Beast",
+                "level": 6,
+                "description": "Vous gagnez 1 capacité passive selon l'esprit totem choisi."
+            },
+            {
+                "parentSubClass": "Totem Warrior",
+                "name": "Spirit Walker",
+                "level": 10,
+                "description": "Peut lancer 'commune with nature' sous forme de rituel."
+            },
+            {
+                "parentSubClass": "Totem Warrior",
+                "name": "Totemic Attunement",
+                "level": 14,
+                "description": "En rage, gagne un effet supplémentaire selon l'esprit totem choisi."
+            }
+        ],
+        "source": "PHB",
+        "official": true
+    },
+    {
+        "parentClass": "Barbarian",
+        "name": "Ancestral Guardian",
+        "description": "Fait appel aux esprits des ancêtres pour l'assister.",
+        "traits": [
+            {
+                "parentSubClass": "Barbarian",
+                "name": "Ancestral Protectors",
+                "level": 3,
+                "description": "En rage, la première créature que vous touchez est désavantagé pour ses attaques contre d''autres cible que vous."
+            },
+            {
+                "parentSubClass": "Barbarian",
+                "name": "Spirit Shield I",
+                "level": 6,
+                "description": "En rage, réaction pour réduire les dégâts d'une attaque sur un allié à 9 m de 2d6."
+            },
+            {
+                "parentSubClass": "Barbarian",
+                "name": "Spirit Shield II",
+                "level": 10,
+                "description": "En rage, réaction pour réduire les dégâts d'une attaque sur un allié à 9 m de 3d6."
+            },
+            {
+                "parentSubClass": "Barbarian",
+                "name": "Consult the Spirits",
+                "level": 10,
+                "description": "Quand vous utilisez Spirit Shield, l'attaquand subit autant de dégâts que ceux réduits (force)."
+            },
+            {
+                "parentSubClass": "Barbarian",
+                "name": "Spirit Shield III",
+                "level": 14,
+                "description": "En rage, réaction pour réduire les dégâts d'une attaque sur un allié à 9 m de 4d6."
+            },
+            {
+                "parentSubClass": "Barbarian",
+                "name": "Vengeful Ancestors",
+                "level": 14,
+                "description": "En rage, réaction pour réduire les dégâts d'une attaque sur un allié à 9 m de 2d6."
+            }
+        ],
+        "source": "XGtE",
+        "official": true
+    }
+]

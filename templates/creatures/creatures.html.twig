@@ -2,18 +2,20 @@
 {% block body %}
 <h1 class="center-item">Listes des créatures</h1>
 <h2 class="center-item">
+    <button class="btn btn-secondary" onclick="toggleForm()">
     {% if editMode %}
         Modifier la créature
     {% else %}
         Nouvelle créature
     {% endif %}
+    </button>
 </h2>
 {% if message|length > 0 %}
 	<div class="alert alert-danger">
 		{{ message|raw }}
 	</div>
 {% endif %}
-<div class="center-item">    
+<div class="center-item" id="filter-form">    
     {{ form_start(formCreature) }}  
     <div class="form-1 form-creature">
         {# name #}
@@ -55,8 +57,7 @@
             </button>
         </div>
     </div>
-    {{ form_end(formCreature) }}
-    
+    {{ form_end(formCreature) }}    
 </div>
 {% if not editMode %}
 <div>
@@ -103,4 +104,8 @@
     </table>
 </div>
 {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
 {% endblock %}

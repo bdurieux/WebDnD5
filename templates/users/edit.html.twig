@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item">Inscription</h1>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message|raw }}
+	</div>
+{% endif %}
+{{ form_start(formUser) }}  
+    <div class="form-1 ">
+        {# mail #}
+        <div class="form-group form-div center-item"> 
+            {{ form_row(formUser.mail,{'attr': { 'placeholder': "mail@", 'class': "form-control"}, 'label' : "Mail"})}}
+        </div>
+        {# username #}
+        <div class="form-group  form-div center-item"> 
+            {{ form_row(formUser.username,{'attr': {'class': "form-control"}, 'label' : "Pseudo"})}}  
+        </div>
+        {# password #}
+        <div class="form-group  form-div center-item">   
+            {{ form_row(formUser.password,{'attr': {'class': "form-control"}, 'label' : "Mot de passe"})}}
+        </div>        
+        {# confirmPassword #}
+        <div class="form-group form-div center-item">   
+            {{ form_row(formUser.confirmPassword,{'attr': {'class': "form-control"}, 'label' : "Confirmer le Mot de passe"})}}
+        </div>
+        {# role #}
+        <div class="form-group form-div center-item">  
+            {{ form_row(formUser.role,{'attr': {'class': "form-control"}, 'label' : "Role"})}} 
+        </div>
+        {# submit #}
+        <div class="form-group creature-submit form-div center-item">   
+            <button type="submit" class="btn btn-success" >
+                {% if editMode %}
+                    Sauver
+                {% else %}
+                    Ajouter
+                {% endif %}
+            </button>
+        </div>
+    </div>
+{{ form_end(formUser) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}

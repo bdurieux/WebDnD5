@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<h1 class="center-item">Sources</h1>
+<h1 class="center-item">Tailles</h1>
 <h2 class="center-item">
     <button class="btn btn-secondary" onclick="toggleForm()">
     {% if editMode %}
-        Modifier la source
+        Modifier la taille
     {% else %}
-        Nouvelle source
+        Nouvelle Taille
     {% endif %}
     </button>
 </h2>
@@ -16,68 +16,58 @@
 	</div>
 {% endif %}
 <div class="center-item" id="filter-form">
-{{ form_start(formSource) }}  
-    <div class="form-1 form-src center-item">
-        {# name #}
-        <div class=""> 
-            {{ form_row(formSource.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+    <div class="form-1 form-sizes" style="margin:auto">
+    {{ form_start(formSize) }}
+        <div class="form-group sz-name center-item"> 
+            {{ form_row(formSize.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
-        {# label #}
-        <div class=""> 
-            {{ form_row(formSource.label,{'attr': {'class': "form-control"}, 'label' : "Label"})}}  
+        <div class="form-group sz-hd center-item"> 
+            {{ form_row(formSize.hitDice, {'attr': {'placeholder': "Label", 'class': "form-control"}, 'label' : "Dés de vie"})}}
         </div>
-        {# official #}
-        <div class="">   
-            {{ form_row(formSource.official,{'attr': {'class': "form-control"}, 'label' : "Officiel"})}}
-        </div>   
-        {# submit #}
-        <div class="">   
+        <div class="form-group sz-face center-item">   
+            {{ form_row(formSize.squareSpace, {'attr': {'placeholder': "Label", 'class': "form-control"}, 'label' : "Largeur"})}}
+        </div>
+        <div class="form-group sz-submit center-item">   
             <button type="submit" class="btn btn-success" >
                 {% if editMode %}
-                    Sauver
+                Sauver
                 {% else %}
-                    Ajouter
+                Ajouter
                 {% endif %}
             </button>
         </div>
+    {{ form_end(formSize) }}
     </div>
-    {{ form_end(formSource) }}
 </div>
 {% if not editMode %}
 <div>
     <table class="table table-center col-4 table-font">
         <thead>
             <tr>
-                <th colspan="4">Listes des sources ({{ sources|length }})</th>
+                <th colspan="4">Listes des tailles ({{ sizes|length }})</th>
             </tr>
             <tr>
-                <th>Source</th>
-                <th>Label</th>
-                <th>Officiel</th>
+                <th>Taille</th>
+                <th>Dés de vie</th>
+                <th>Largeur</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-        {% for source in sources %}
+        {% for size in sizes %}
             <tr>
-                <td><strong>{{ source.name }}</strong></td>
-                <td>{{ source.label }}</td>
-                <td>
-                {% if source.official %}
-                    Oui
-                {% else %}
-                    Non
-                {% endif %}
-                </td>
+                <td><strong>{{ size.name }}</strong></td>
+                <td>{{ size.hitDice }}</td>
+                <td>{{ size.squareSpace }}</td>
                 <td class="inline-content">
                     <div class="">
-                        <a href="{{ path('source', { id: source.id })}}" class="button btn btn-primary" >
+                        <a href="{{ path('size', { id: size.id })}}" class="button btn btn-primary" >
                         <strong>Modifier</strong>
                         </a>               
                     </div>
                     <form method="post" class="">
                         <div class="">   
-                            <input type="hidden" name="source_del" value="{{ source.id }}" />
+                            <input type="hidden" name="size_del" value="{{ size.id }}" />
                         </div>
                         <div class="">   
                             <input type="submit" value="Supprimer" class="btn btn-danger" />

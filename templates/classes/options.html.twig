@@ -1,83 +1,74 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<h1 class="center-item">Sources</h1>
+<h1>Classes Options</h1>
 <h2 class="center-item">
     <button class="btn btn-secondary" onclick="toggleForm()">
     {% if editMode %}
-        Modifier la source
+        Modifier l'option
     {% else %}
-        Nouvelle source
+        Nouvelle option
     {% endif %}
     </button>
 </h2>
-{% if message|length > 0 %}
-	<div class="alert alert-danger">
-		{{ message|raw }}
-	</div>
-{% endif %}
 <div class="center-item" id="filter-form">
-{{ form_start(formSource) }}  
+{{ form_start(formClasseOption) }}  
     <div class="form-1 form-src center-item">
         {# name #}
         <div class=""> 
-            {{ form_row(formSource.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+            {{ form_row(formClasseOption.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
-        {# label #}
+        {# description #}
         <div class=""> 
-            {{ form_row(formSource.label,{'attr': {'class': "form-control"}, 'label' : "Label"})}}  
+            {{ form_row(formClasseOption.description,{'attr': {'class': "form-control"}, 'label' : "Description"})}}  
         </div>
-        {# official #}
+        {# level #}
         <div class="">   
-            {{ form_row(formSource.official,{'attr': {'class': "form-control"}, 'label' : "Officiel"})}}
-        </div>   
+            {{ form_row(formClasseOption.level,{'attr': {'class': "form-control"}, 'label' : "Niveau"})}}
+        </div> 
+        {# classe #}
+        <div class="">   
+            {{ form_row(formClasseOption.idClass,{'attr': {'class': "form-control"}, 'label' : "Classe"})}}
+        </div>           
         {# submit #}
         <div class="">   
             <button type="submit" class="btn btn-success" >
-                {% if editMode %}
-                    Sauver
-                {% else %}
                     Ajouter
-                {% endif %}
             </button>
         </div>
     </div>
-    {{ form_end(formSource) }}
+    {{ form_end(formClasseOption) }}
 </div>
 {% if not editMode %}
 <div>
-    <table class="table table-center col-4 table-font">
+    <table class="table table-center table-XL table-font">
         <thead>
             <tr>
-                <th colspan="4">Listes des sources ({{ sources|length }})</th>
+                <th colspan="5">Listes des options ({{ classeOptions|length }})</th>
             </tr>
             <tr>
-                <th>Source</th>
-                <th>Label</th>
-                <th>Officiel</th>
+                <th>Nom</th>
+                <th>Niveau</th>
+                <th>Description</th>
+                <th>Classe</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-        {% for source in sources %}
+        {% for option in classeOptions %}
             <tr>
-                <td><strong>{{ source.name }}</strong></td>
-                <td>{{ source.label }}</td>
-                <td>
-                {% if source.official %}
-                    Oui
-                {% else %}
-                    Non
-                {% endif %}
-                </td>
+                <td><strong>{{ option.name }}</strong></td>
+                <td>{{ option.level }}</td>
+                <td>{{ option.description }}</td>
+                <td>{{ option.class_name }}</td>
                 <td class="inline-content">
                     <div class="">
-                        <a href="{{ path('source', { id: source.id })}}" class="button btn btn-primary" >
+                        <a href="{{ path('class.option', { id: option.id })}}" class="button btn btn-primary" >
                         <strong>Modifier</strong>
                         </a>               
                     </div>
                     <form method="post" class="">
                         <div class="">   
-                            <input type="hidden" name="source_del" value="{{ source.id }}" />
+                            <input type="hidden" name="option_del" value="{{ option.id }}" />
                         </div>
                         <div class="">   
                             <input type="submit" value="Supprimer" class="btn btn-danger" />
