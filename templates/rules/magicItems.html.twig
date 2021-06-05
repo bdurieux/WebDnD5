@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item">Objets Magiques</h1>
+
+<div>
+    <h2>Parchemin</h2>
+    <p>Si le sort est sur la liste du PJ (mais pas forcement connu ou mémorisé):
+        <ul>
+            <li>le PJ a le niveau pour le lancer: celui ci peut le lancer sans dépenser d'emplacement ou de composants.</li>
+            <li>le PJ n'a pas le niveau pour le lancer: le PJ peut faire un jet sous sa caractéristique de lancer de sort avec une difficulté de 10 + niveau du sort.
+                <ul>
+                    <li>Echec: le lancement du sort échoue.</li>
+                </ul>
+            </li>
+        </ul>
+    </p>
+    <p>Un magicien peut copier un sort dans son grimoire en réussissant un jet d'Arcane [DD = 10 + niveau du sort].</p>
+    <p>Dans tout les cas, le sort disparait du parchemin et celui ci est détruit après l'utilisation.</p>
+    <p>Le niveau du sort détermine le Degré de Difficulté des JS et le jet d'attaque de sort.</p>
+    <table id="table_scroll" class="table table-XL table-font shadow rounded">
+        <thead>
+            <tr>
+                <th colspan="4">Table des parchemins</th>
+            </tr>
+            <tr>
+                <th>Niveau Sort</th>
+                <th>Rareté</th>
+                <th>DD</th>
+                <th>Attaque</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>0</td>
+                <td>Commun</td>
+                <td>13</td>
+                <td>+5</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Commun</td>
+                <td>13</td>
+                <td>+5</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Inhabituel</td>
+                <td>13</td>
+                <td>+5</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Inhabituel</td>
+                <td>15</td>
+                <td>+7</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Rare</td>
+                <td>15</td>
+                <td>+7</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Rare</td>
+                <td>17</td>
+                <td>+9</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Très Rare</td>
+                <td>17</td>
+                <td>+9</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Très Rare</td>
+                <td>18</td>
+                <td>+10</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Très Rare</td>
+                <td>18</td>
+                <td>+10</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Légendaire</td>
+                <td>19</td>
+                <td>+11</td>
+            </tr>
+        </tbody>
+    </table> 
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}

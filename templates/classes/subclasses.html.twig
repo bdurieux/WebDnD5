@@ -12,29 +12,29 @@
 </h2>
 <div class="center-item" id="filter-form">
 {{ form_start(formSubclass) }}  
-    <div class="form-1 form-sub">
+    <div class="form-1 form-flex size-XL">
         {# name #}
-        <div class="sub-name"> 
+        <div class="frm-input"> 
             {{ form_row(formSubclass.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
         {# description #}
-        <div class="sub-desc"> 
+        <div class="frm-input"> 
             {{ form_row(formSubclass.description,{'attr': {'class': "form-control"}, 'label' : "Description"})}}  
         </div>
         {# class #}
-        <div class="sub-class">   
+        <div class="frm-select">   
             {{ form_row(formSubclass.idClass,{'attr': {'class': "form-control"}, 'label' : "Classe"})}}
         </div>
         {# source #}
-        <div class="sub-src">   
+        <div class="frm-select">   
             {{ form_row(formSubclass.idSource,{'attr': {'class': "form-control"}, 'label' : "Source"})}}
         </div>
         {# page #}
-        <div class="sub-page">  
+        <div class="frm-input">  
             {{ form_row(formSubclass.page,{'attr': {'class': "form-control"}, 'label' : "Page"})}} 
         </div>             
         {# submit #}
-        <div class="sub-ok">   
+        <div class="frm-ok">   
             <button type="submit" class="btn btn-success" >
                     Ajouter
             </button>

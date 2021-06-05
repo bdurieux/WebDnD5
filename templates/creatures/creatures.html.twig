@@ -17,37 +17,37 @@
 {% endif %}
 <div class="center-item" id="filter-form">    
     {{ form_start(formCreature) }}  
-    <div class="form-1 form-creature">
+    <div class="form-1 form-flex size-XL">
         {# name #}
-        <div class="creature-name "> 
+        <div class="frm-input"> 
             {{ form_row(formCreature.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
         {# taille #}
-        <div class="form-group creature-size center-item"> 
+        <div class="frm-select"> 
             {{ form_row(formCreature.idSize,{'attr': {'class': "form-control"}, 'label' : "Size"})}}  
         </div>
         {# type #}
-        <div class="form-group creature-type center-item">   
+        <div class="frm-select">   
             {{ form_row(formCreature.idType,{'attr': {'class': "form-control"}, 'label' : "Type"})}}
         </div>        
         {# alignement #}
-        <div class="form-group creature-algmt center-item">   
+        <div class="frm-select">   
             {{ form_row(formCreature.idAlignment,{'attr': {'class': "form-control"}, 'label' : "Alignement"})}}
         </div>
         {# challenge #}
-        <div class="form-group creature-cr center-item">  
+        <div class="frm-select">  
             {{ form_row(formCreature.challenge,{'attr': {'class': "form-control"}, 'label' : "Challenge"})}} 
         </div>
         {# source #}
-        <div class="form-group creature-src center-item">   
+        <div class="frm-select">   
             {{ form_row(formCreature.idSource,{'attr': {'class': "form-control"}, 'label' : "Source"})}}
         </div>
         {# page #}
-        <div class="form-group creature-page center-item">  
+        <div class="frm-input">  
             {{ form_row(formCreature.page,{'attr': {'class': "form-control"}, 'label' : "Page"})}} 
         </div>
         {# submit #}
-        <div class="form-group creature-submit center-item">   
+        <div class="frm-ok">   
             <button type="submit" class="btn btn-success" >
                 {% if editMode %}
                     Sauver

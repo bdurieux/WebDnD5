@@ -32,7 +32,7 @@ class CreatureRepository extends ServiceEntityRepository
                 LEFT JOIN creature_size z ON z.id = c.id_size 
                 LEFT JOIN creature_type t ON t.id = c.id_type 
                 LEFT JOIN alignment a ON a.id = c.id_alignment 
-                LEFT JOIN source s ON s.id = c.id_source
+                LEFT JOIN dd_source s ON s.id = c.id_source
             GROUP BY c.name 
             ORDER BY c.name             
             ';
@@ -71,7 +71,7 @@ class CreatureRepository extends ServiceEntityRepository
                 LEFT JOIN creature_size z ON z.id = c.id_size 
                 LEFT JOIN creature_type t ON t.id = c.id_type 
                 LEFT JOIN alignment a ON a.id = c.id_alignment 
-                LEFT JOIN source s ON s.id = c.id_source
+                LEFT JOIN dd_source s ON s.id = c.id_source
             WHERE t.id IN (' . $sql_type . ') AND s.id IN (' . $sql_src . ')
             GROUP BY c.name 
             ORDER BY c.name             
@@ -93,7 +93,7 @@ class CreatureRepository extends ServiceEntityRepository
                 LEFT JOIN creature_size z ON z.id = c.id_size 
                 LEFT JOIN creature_type t ON t.id = c.id_type 
                 LEFT JOIN alignment a ON a.id = c.id_alignment 
-                LEFT JOIN source s ON s.id = c.id_source
+                LEFT JOIN dd_source s ON s.id = c.id_source
             WHERE c.id_type = ?
             ORDER BY c.challenge, c.name
             ';

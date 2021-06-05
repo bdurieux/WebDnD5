@@ -17,21 +17,25 @@
 {% endif %}
 <div class="center-item" id="filter-form">
 {{ form_start(formSource) }}  
-    <div class="form-1 form-src center-item">
+    <div class="form-1 form-flex size-XL">
         {# name #}
-        <div class=""> 
+        <div class="frm-input"> 
             {{ form_row(formSource.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
         {# label #}
-        <div class=""> 
+        <div class="frm-input"> 
             {{ form_row(formSource.label,{'attr': {'class': "form-control"}, 'label' : "Label"})}}  
         </div>
         {# official #}
-        <div class="">   
+        <div class="frm-radio">   
             {{ form_row(formSource.official,{'attr': {'class': "form-control"}, 'label' : "Officiel"})}}
-        </div>   
+        </div>
+        {# setting #}
+        <div class="frm-select">   
+            {{ form_row(formSource.idSetting,{'attr': {'class': "form-control"}, 'label' : "Campagne"})}}
+        </div>  
         {# submit #}
-        <div class="">   
+        <div class="frm-ok">   
             <button type="submit" class="btn btn-success" >
                 {% if editMode %}
                     Sauver
@@ -48,12 +52,13 @@
     <table class="table table-center col-4 table-font">
         <thead>
             <tr>
-                <th colspan="4">Listes des sources ({{ sources|length }})</th>
+                <th colspan="5">Listes des sources ({{ sources|length }})</th>
             </tr>
             <tr>
                 <th>Source</th>
                 <th>Label</th>
                 <th>Officiel</th>
+                <th>Campagne</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -69,6 +74,7 @@
                     Non
                 {% endif %}
                 </td>
+                <td>{{ source.idSetting.name }}</td>
                 <td class="inline-content">
                     <div class="">
                         <a href="{{ path('source', { id: source.id })}}" class="button btn btn-primary" >

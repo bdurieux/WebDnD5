@@ -7,9 +7,16 @@
 	</div>
 {% endif %}
 <div class="btn-list">
+{% for prerequisite in prerequisiteList %}
+    <div class="{% if prerequisite|length > 1  %}btn-label shadow rounded{% endif %} btn-list">
+    {% if prerequisite|length > 1  %}<span class="bold">{{ prerequisite }}</span>{% endif %}
     {% for feat in feats %}
+        {% if feat.prerequisite == prerequisite %}
         <a href="#feat_{{ feat.id }}" class="button btn btn-secondary">{{ feat.name }}</a>
+        {% endif %}
     {% endfor %}
+    </div>
+{% endfor %}
 </div>
 <div>
     {% for feat in feats %}
@@ -25,7 +32,7 @@
             <p><em><strong>Prérequis:</strong> {{ feat.prerequisite }}</em></p>
         {% endif %}
         <p>{{ feat.description|raw }}</p>
-        <p><a href="#top" class="">Haut de page</a></p>
+        <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
     {% endfor %}    
 </div>
 {% endblock %}

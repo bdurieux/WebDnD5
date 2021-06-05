@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -11,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\Zgrouf;
 use App\Repository\ZgroufRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserController extends AppController{
     
@@ -24,7 +27,11 @@ class UserController extends AppController{
      * @Route("/user/inscription", name="user.inscription")
      * @Route("/user/edit/{id}", name="user.edit")
      */
-    public function edit($id = null,ZgroufRepository $userRepo,Request $request,ValidatorInterface $validator){
+    public function edit($id = null,
+                        ZgroufRepository $userRepo,
+                        Request $request,
+                        ValidatorInterface $validator
+                        ){
         $message = "";
         if($id === null){
             $user = new Zgrouf();
@@ -40,8 +47,14 @@ class UserController extends AppController{
         $formUser = $this->createFormBuilder($user)
                           ->add('mail')
                           ->add('username')
-                          ->add('password')
-                          ->add('confirmPassword')
+                          ->add('password', RepeatedType::class, [
+                                'type' => PasswordType::class,
+                                'invalid_message' => 'Les 2 champs mot de passe doivent être identiques.',
+                                'options' => ['attr' => ['class' => 'password-field']],
+                                'required' => true,
+                                'first_options'  => ['label' => 'Mot de passe'],
+                                'second_options' => ['label' => 'Répéter mot de passe'],
+                            ])
                           ->add('role', ChoiceType::class, [
                             'choices' => array_flip(self::ROLE_INDEX),
                             'choice_label' => function ($choice, $key, $value) {
@@ -50,14 +63,17 @@ class UserController extends AppController{
                             ])
                           ->getForm();
         $formUser->handleRequest($request);
-        // vérification de l'unicité du pseudo  A TESTER
-        if(isset($_POST['username'])){
-            $pseudoUser = $userRepo->findOneByUsername($_POST['username']);
-            if($pseudoUser->getId() !== null && ($pseudoUser->getId() != $user->getId())){
+        // vérification de l'unicité du pseudo  A TESTER // TODO: securiser mot de passe & login & modifier params
+        //var_dump($_POST['form']['username']);        
+        if(isset($_POST['form']['username'])){
+            $pseudoUser = $userRepo->findOneByUsername($_POST['form']['username']);
+            if($pseudoUser !== null && ($pseudoUser->getId() != $user->getId())){
                 $message .= "Pseudo déjà utilisé.";
-            }else{
+            }else{                
                 // on sauve les données
                 if($formUser->isSubmitted() && $formUser->isValid()){            
+                    // on sécurise le mot de passe
+                    $user->setPassword(password_hash($this->secure($_POST['password']),PASSWORD_DEFAULT));
                     if($user->getId() === null){  // new                          
                         $entityManager->persist($user);
                     }

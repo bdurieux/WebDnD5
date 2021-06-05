@@ -12,25 +12,25 @@
 </h2>
 <div class="center-item" id="filter-form">
 {{ form_start(formClasseOption) }}  
-    <div class="form-1 form-src center-item">
+    <div class="form-1 form-flex size-XL">
         {# name #}
-        <div class=""> 
+        <div class="frm-input"> 
             {{ form_row(formClasseOption.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
         {# description #}
-        <div class=""> 
-            {{ form_row(formClasseOption.description,{'attr': {'class': "form-control"}, 'label' : "Description"})}}  
+        <div class="frm-input"> 
+            {{ form_row(formClasseOption.description,{'attr': {'placeholder': "Description",'class': "form-control"}, 'label' : "Description"})}}  
         </div>
         {# level #}
-        <div class="">   
-            {{ form_row(formClasseOption.level,{'attr': {'class': "form-control"}, 'label' : "Niveau"})}}
+        <div class="frm-input">   
+            {{ form_row(formClasseOption.level,{'attr': {'placeholder': "Niveau",'class': "form-control"}, 'label' : "Niveau"})}}
         </div> 
         {# classe #}
-        <div class="">   
+        <div class="frm-select">   
             {{ form_row(formClasseOption.idClass,{'attr': {'class': "form-control"}, 'label' : "Classe"})}}
         </div>           
         {# submit #}
-        <div class="">   
+        <div class="frm-ok">   
             <button type="submit" class="btn btn-success" >
                     Ajouter
             </button>

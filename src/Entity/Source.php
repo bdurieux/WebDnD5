@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Source
  *
- * @ORM\Table(name="source")
+ * @ORM\Table(name="dd_source", indexes={@ORM\Index(name="FK_source_setting_id", columns={"id_setting"})})
  * @ORM\Entity
  */
 class Source
@@ -41,6 +41,16 @@ class Source
      * @ORM\Column(name="official", type="boolean", nullable=false)
      */
     private $official = '0';
+
+    /**
+     * @var \Setting
+     *
+     * @ORM\ManyToOne(targetEntity="Setting")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_setting", referencedColumnName="id")
+     * })
+     */
+    private $idSetting;
 
     public function getId(): ?int
     {
@@ -79,6 +89,18 @@ class Source
     public function setOfficial(bool $official): self
     {
         $this->official = $official;
+
+        return $this;
+    }
+
+    public function getIdSetting(): ?Setting
+    {
+        return $this->idSetting;
+    }
+
+    public function setIdSetting(?Setting $idSetting): self
+    {
+        $this->idSetting = $idSetting;
 
         return $this;
     }

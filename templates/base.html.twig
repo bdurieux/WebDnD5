@@ -1,28 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <title>{% block title %}{{ title }}!{% endblock %}</title>
+        <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0" />
+        <title>{% block title %}{{ title }}{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
         {% endblock %}
     </head>
     <body>
         {% block header %}
-        <header>
+        <header class="header1 shadow">
+            <div class="header-top even-columns">
+                <div class="header-logo">
+                    <a href="{{ path('home') }}"><img src="{{ asset('images/dndnextlogo.jpg') }}" alt="logo" class="logo" ></a>
+                </div>
+                <div class="header-title center-item">
+                    <h2>Repère des Zgroufs</h2>
+                </div>
+                <div class="header-log even-columns center-item">
+                    {# <div id="header-login">
+                        <a href="#" class="button btn btn-primary "><i class="fa fa-user"></i></a>
+                    </div>
+                    <div id="header-logged">
+                        <a href="#" class="">Header Text</i></a>
+                    </div>
+                    <div id="header-logout">
+                        <a href="#" class="button btn btn-danger "><i class="fa fa-sign-out"></i></a>
+                    </div> #}
+                </div>
+            </div>
+            <nav class="header-nav">
+                <ul class="even-columns size-XL">
+                    <li><a href="{{ path('home') }}" class="size-XL">Accueil</a></li>
+                    <li class="dropdown">
+                        <a href="" class="dropbtn ">Règles</a>
+                        <div class="dropdown-content">
+                            <a href="{{ path('classes') }}">Classes</a>
+                            <a href="{{ path('combat') }}">Combat</a>
+                            <a href="{{ path('dons') }}">Dons</a>                            
+                            <a href="{{ path('equipement') }}">Equipement</a>
+                            <a href="{{ path('historiques') }}">Historiques</a>
+                            <a href="{{ path('magic_items') }}">Objets Magiques</a>
+                            <a href="{{ path('poison') }}">Poison</a>
+                            <a href="{{ path('feats') }}">Editeur Dons</a>
+                            <a href="{{ path('backgrounds') }}">Editeur Historiques</a>
+                            <a href="{{ path('class.options') }}">Editeur Options</a>
+                            <a href="{{ path('class.subclasses') }}">Editeur Sous-classes</a>
+                            <a href="{{ path('class.subclasstraits') }}">Editeur Traits</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="" class="dropbtn ">Créatures</a>
+                        <div class="dropdown-content">                        
+                            <a href="{{ path('creature.compendium') }}">Compendium</a>
+                            <a href="{{ path('alignments') }}">Editeur Alignement</a>
+                            <a href="{{ path('creatures') }}">Editeur Créatures</a>
+                            <a href="{{ path('creature.sizes') }}">Editeur Tailles</a>
+                            <a href="{{ path('creature.types') }}">Editeur Types</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="" class="dropbtn ">Divers</a>
+                        <div class="dropdown-content">
+                            <a href="{{ path('convert') }}">Convertisseur</a>
+                            <a href="{{ path('sources') }}">Editeur Sources</a>
+                            <a href="{{ path('campagnes') }}">Editeur Campagnes</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        {# <header class="header shadow" id="top">
             <div>
                 <a href="{{ path('home') }}"><img src="{{ asset('images/dndnextlogo.jpg') }}" alt="logo" class="logo" ></a>
             </div>
-            <nav>
+            <div id="header-login">
+                <a href="" class="button btn btn-primary "><i class="fa fa-user"></i></a>
+            </div>
+            <div id="header-logged">
+                <a href="" class=" ">Header Text</i></a>
+            </div>
+            <div id="header-logout">
+                <a href="" class="button btn btn-danger "><i class="fa fa-sign-out"></i></a>
+            </div>
+            <nav class="nav">
                 <ul>
                     <li><a href="{{ path('home') }}">Accueil</a></li>
                     <li class="dropdown">
                         <a href="" class="dropbtn">Règles</a>
                         <div class="dropdown-content">
                             <a href="{{ path('classes') }}">Classes</a>
+                            <a href="{{ path('combat') }}">Combat</a>
                             <a href="{{ path('dons') }}">Dons</a>                            
+                            <a href="{{ path('equipement') }}">Equipement</a>
+                            <a href="{{ path('historiques') }}">Historiques</a>
+                            <a href="{{ path('poison') }}">Poison</a>
                             <a href="{{ path('feats') }}">Editeur Dons</a>
+                            <a href="{{ path('backgrounds') }}">Editeur Historiques</a>
                             <a href="{{ path('class.options') }}">Editeur Options</a>
                             <a href="{{ path('class.subclasses') }}">Editeur Sous-classes</a>
                             <a href="{{ path('class.subclasstraits') }}">Editeur Traits</a>
@@ -43,11 +121,12 @@
                         <div class="dropdown-content">
                             <a href="{{ path('convert') }}">Convertisseur</a>
                             <a href="{{ path('sources') }}">Editeur Sources</a>
+                            <a href="{{ path('campagnes') }}">Editeur Campagnes</a>
                         </div>
                     </li>
                 </ul>
             </nav>
-        </header>
+        </header> #}
         {% endblock %}
         {% block body %}{% endblock %}
         {% block footer %}

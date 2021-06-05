@@ -2,27 +2,32 @@
 {% block body %}
 <h1 class="center-item">Alignement</h1>
 <h2 class="center-item">
-{% if editMode %}
-Modifier l'alignement
-{% else %}
-Nouvel Alignement
-{% endif %}
+    <button class="btn btn-secondary" onclick="toggleForm()">
+        {% if editMode %}
+            Modifier l'alignement
+        {% else %}
+            Nouveau Alignement
+        {% endif %}
+    </button>
 </h2>
 {% if message|length > 0 %}
 	<div class="alert alert-danger">
 		{{ message|raw }}
 	</div>
 {% endif %}
-<div class="center-item">
-    <div class="form-1 form-sizes">
+<div class="center-item" id="filter-form">
     {{ form_start(formAlgmt) }}
-        <div class="form-group sz-name center-item"> 
+    <div class="form-1 form-flex size-XL">
+        {# name #}
+        <div class="frm-input"> 
             {{ form_row(formAlgmt.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
-        <div class="form-group sz-name center-item"> 
+        {# label #}
+        <div class="frm-input"> 
             {{ form_row(formAlgmt.label, {'attr': {'placeholder': "Label", 'class': "form-control"}, 'label' : "Label"})}}
         </div>
-        <div class="form-group sz-submit center-item">   
+        {# submit #}
+        <div class="frm-ok">   
             <button type="submit" class="btn btn-success" >
                 {% if editMode %}
                 Sauver
@@ -30,9 +35,9 @@ Nouvel Alignement
                 Ajouter
                 {% endif %}
             </button>
-        </div>
-    {{ form_end(formAlgmt) }}
+        </div>    
     </div>
+    {{ form_end(formAlgmt) }}
 </div>
 {% if not editMode %}
 <div>
@@ -73,4 +78,8 @@ Nouvel Alignement
     </table>
 </div>
 {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
 {% endblock %}

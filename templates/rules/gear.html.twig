@@ -1,0 +1,499 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 id="">Equipement</h1>
+<section class="sidenav" id="side_menu">
+    <button class="dropdown-btn top-link">
+        <a href="#top">Top</a>
+    </button>
+    <div class="dropdown-container top-link">
+        <a href="#"></a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#encombrement">Encombrement</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#armures">Armures</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#armures">Table</a>
+        <a href="#enfiler">Enfiler</a>
+        <a href="#armures_ameliorations">Amélioration</a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#armes">Armes</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#armes">Table</a>
+        <a href="#proprietes">Propriétés</a>
+        <a href="#armes_ameliorations">Amélioration</a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#runestones">Pierres runiques</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#outils">Outils</a>
+        <a href="#graver">Gravure</a>
+        <a href="#armes_runiques">Armes</a>
+        <a href="#armures_runiques">Armures</a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#depenses">Dépenses</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#train_de_vie">Train de vie</a>
+        <a href="#artisan">Artisan</a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#composant">Composants</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#evaluer">Evaluation</a>
+        <a href="#recolte">Récolte</a>
+    </div>
+</section>
+{# <div class="btn-list">
+    <a href="#encombrement" class="button btn btn-secondary">Encombrement</a>
+    <a href="#armures" class="button btn btn-secondary">Armures</a>
+    <a href="#armes" class="button btn btn-secondary">Armes</a>
+    <a href="#runestones" class="button btn btn-secondary">Pierres Runiques</a>
+    <a href="#depenses" class="button btn btn-secondary">Dépenses</a>
+    <a href="#recolte" class="button btn btn-secondary">Récolte</a>
+</div> #}
+<section>
+    <h2 id="encombrement">Encombrement</h2>
+    <p>Les pièces pèsent environs 10 g (100 pièces = 1 kg).</p>
+    <p>Un volume de 1 litre contient environ 500 pièces (5 kg).</p>
+    <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+</section>
+<section>
+    <h2 id="armures">Armures</h2>
+    <p>Porter une amure sans en avoir la maîtrise:
+        <ul class="">
+            <li>désavantage sur jets d'attaque, de sauvegarde et de caractéristique qui dépendent de la For oud Dex.</li>
+            <li>ne peut pas lancer de sort.</li>
+        </ul>
+    </p>
+    <table id="table_armor" class="table table-XL table-font shadow rounded">
+        <thead>
+            <tr>
+                <th colspan="6">Table des armures</th>
+            </tr>
+            <tr>
+                <th>Armure</th>
+                <th>Coût (po)</th>
+                <th>CA</th>
+                <th>Prérequis</th>
+                <th>Poids</th>
+                <th>Discrétion</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>    
+    <p>*: toutes les armures intermédiaires et lourdes ont une couche de gambeson en dessous. Si vous possèdez déjà une gambeson, retirer son prix à celui d'une armure lourde ou intermédiaire.</p>
+    <p>$: peut être amélioré en harnois en payant la différence de prix.</p>
+    <p>#: impossible de faire des attaques d'opportunité en tenant un pavois.</p>
+    <div>
+        <h3 id="enfiler">Enfiler et ôter une armure</h3>
+        <table class="table shadow rounded">
+            <thead>
+                <tr>
+                    <th colspan="3">Temps pour enfiler ou oter une armure</th>
+                </tr>
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Enfiler</th>
+                    <th>Oter</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Armures légères</td>
+                    <td data-label='Enfiler'>1 min</td>
+                    <td data-label='Oter'>1 min</td>
+                </tr>
+                <tr>
+                    <td>Armures intermédiaires</td>
+                    <td data-label='Enfiler'>5 min</td>
+                    <td data-label='Oter'>1 min</td>
+                </tr>
+                <tr>
+                    <td>Armures lourdes</td>
+                    <td data-label='Enfiler'>10 min</td>
+                    <td data-label='Oter'>5 min</td>
+                </tr>
+                <tr>
+                    <td>Bouclier</td>
+                    <td data-label='Enfiler'>1 action</td>
+                    <td data-label='Oter'>1 action</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h3 title="CAHB 9" id="armures_ameliorations">Amélioration d'armure</h3>
+        <table class="table table-XL shadow rounded" id="table_armor_upgrade">
+            <thead>
+                <tr>
+                    <th colspan="4">Liste des améliorations d'armure</th>
+                </tr>
+                <tr>
+                    <th>Tag</th>
+                    <th>Coût (po)</th>
+                    <th>Prérequis</th>
+                    <th>Effets quand portée</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <p>#: appliqué par un maitre des runes.</p>
+    </div>
+    <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+</section>
+<section>
+    <h2 id="armes">Armes</h2>
+    <p>Utiliser une arme sans avoir la maîtrise de son maniement empêche d'ajouter son bMaitrise aux jets d'attaques.</p>
+    <table class="table table-XL shadow rounded" id="table_weapon">
+        <thead>
+            <tr>
+                <th colspan="5">ARMES</th>
+            </tr>
+            <tr>
+                <th>Arme</th>
+                <th>Cout</th>
+                <th>Dégâts</th>
+                <th>Poids (kg)</th>
+                <th>Propriétés</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <div>
+        <h3>Arme improvisée</h3>
+        <p>Par défaut, 1d4 dégâts et portée (6/18).</p>
+    </div>
+    <div>
+        <h3 title="PHB 146" id="proprietes">Propriétés des armes</h3>
+        <p><strong>A deux main <span class="english">(Two-handed)</span>:</strong> doit être manier à 2 mains pour attaquer.</p>
+        <p><strong>Allonge <span class="english">(Reach)</span>:</strong> ajoute 1,5 m à votre allonge en mêlée.</p>
+        <p><strong>Cachée <span class="english">(Concealed)</span>:</strong> avantage sur les jets pour dissimuler l'arme.</p>
+        <p><strong>Cartouchière <span class="english">(Bandolier)</span>:</strong> peut dégainer 1 arme du même type en faisant 1 attaque à distance avec l'arme.</p>
+        <p><strong>Chargement <span class="english">(Loading)</span>:</strong> ne peut attaquer d'une fois avec 1 action/réaction/action bonus.</p>
+        <p><strong>Finesse <span class="english">(Finesse)</span>:</strong> peut attaquer en utilisant le bDex au lieu de bFor (utiliser le même bonus pour les dégâts).</p>
+        <p><strong>Lancer <span class="english">(Thrown)</span>:</strong> peut attaquer à distance en tulisant le même bonsu que pour une attque de mêlée.</p>
+        <p><strong>Légère <span class="english">(Light)</span>:</strong> permet le combat à 2 armes.</p>
+        <p><strong>Limitée <span class="english">(Limited)</span>:</strong> le port de cette arme est souvent restreint ou interdit.</p>
+        <p><strong>Lourde <span class="english">(Heavy)</span>:</strong> les attaques se font avec désavantage pour les créatures de taille inférieure à M.</p>
+        <p><strong>Munition <span class="english">(Ammunition)</span>:</strong> considérée comme arme improvisée si utilisé pour attaquer en mêlée.</p>
+        <p><strong>Polyvalente <span class="english">(Versatile)</span>:</strong> peut être utilisé à 1 ou 2 mains (les dégâts à 2 mains sont entre parenthèses).</p>
+        <p><strong>Portée (c/l)<span class="english">(Range)</span>:</strong> attaque normale si distance inférieure à c. attaque avec désavantage si distance entre c et l.</p>
+        <p><strong>Siège <span class="english">(Siege)</span>:</strong> l'arme inflige double dégâts aux objets et structures.</p>
+        <p><strong>Speciale <span class="english">(Special)</span>:</strong> règles spécifiques à l'arme.</p>
+    </div>
+    <div>
+        <h3 title="CAHB 11" id="armes_ameliorations">Amélioration d'arme</h3>
+        <table class="table table-XL shadow rounded" id="table_weapon_upgrade">
+            <thead>
+                <tr>
+                    <th colspan="3">Liste des améliorations d'arme</th>
+                </tr>
+                <tr>
+                    <th>Tag</th>
+                    <th>Prérequis</th>
+                    <th>Effets quand portée</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <p><strong>(#)</strong>: appliqué par un maitre des runes.</p>
+        <p><strong>($)</strong>: appliqué par un lanceur de sorts.</p>
+        <p>C: contondants.</p>
+        <p>P: perforants.</p>
+        <p>T: tranchants.</p>
+    </div>
+    <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+</section>
+<section>
+    <h2 id="runestones" title="CAHB 15">Pierres Runiques</h2>
+    <div>
+        <h3 id="outils">Outils de Maitre Runes</h3>
+        <p>La maitrise des outils de maitre runes vous permet de graver des runes magiques et de les reconnaître en les voyant.</p>
+        <p>Les outils de maitre runes coûtent 25 po et pèsent 2,5 kg.</p>
+        <ul class="list">
+            <li><strong>Composition:</strong> Le matériel de maitre runes se compose d'un marteau, de burins, de limes, d'une brosse, 1 bourse de poudre de mithral et d'une fiole de laque alchimique.</li>
+            <li><strong>Arcanes et Histoire:</strong> Votre expertise vous permet d'obtenir des informations supplémentaires sur les runes, symboles et glyphes rencontrées.</li>
+            <li><strong>Investigation:</strong> Vous pouvez déceler des indices et faire des déductions en inspectant les surfaces sur lesquelles sont inscrites des runes.</li>
+        </ul>
+        <table class="table shadow rounded">
+            <thead>
+                <tr>
+                    <th colspan="2">Outils de maitre runes</th>
+                </tr>
+                <tr>
+                    <th>Activité</th>
+                    <th>DD</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label='Activité'>Identifier les propriétes d'une rune</td>
+                    <td data-label='DD'>15</td>
+                </tr>
+                <tr>
+                    <td data-label='Activité'>Déterminer le créateur d'une rune</td>
+                    <td data-label='DD'>20</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h3 id="graver">Graver une rune</h3>
+        <table class="table shadow rounded">
+            <thead>
+                <tr>
+                    <th colspan="3">Prérequis pour graver une rune</th>
+                </tr>
+                <tr>
+                    <th>Rareté de la rune</th>
+                    <th>Valeur gemme (po)</th>
+                    <th>DD</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label='Rareté'>Commune</td>
+                    <td data-label='Valeur (po)'>10+</td>
+                    <td data-label='DD'>10</td>
+                </tr>
+                <tr>
+                    <td data-label='Rareté'>Inhabituelle</td>
+                    <td data-label='Valeur (po)'>50+</td>
+                    <td data-label='DD'>15</td>
+                </tr>
+                <tr>
+                    <td data-label='Rareté'>Rare</td>
+                    <td data-label='Valeur (po)'>500+</td>
+                    <td data-label='DD'>20</td>
+                </tr>
+                <tr>
+                    <td data-label='Rareté'>Très Rare</td>
+                    <td data-label='Valeur (po)'>1000+</td>
+                    <td data-label='DD'>25</td>
+                </tr>
+                <tr>
+                    <td data-label='Rareté'>Légendaire</td>
+                    <td data-label='Valeur (po)'>5000+</td>
+                    <td data-label='DD'>28</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Une fois les prérequis remplis, et avec les bons outils, il faut 2 h pour graver une rune.</p>
+        <p>Le bonus pour graver une rune = bMaitrise + bDex ou bInt</p>
+        <p>En cas d'échec, le gemme est détruite.</p>
+        <p>Le coût pour graver une rune vaut [[[2x bMaitrise] + DD]x10] po plus le prix de la gemme nécessaire.</p>
+    </div>
+    <div>
+        <h3>Pierre Runique connues</h3>        
+        <div>
+            <h4 id="armures_runiques">Armures</h4>
+            <table class="table table-XL shadow rounded" id="table_armor_runestone">
+                <thead>
+                    <tr>
+                        <th colspan="4">Pierre Runique pour Armure</th>
+                    </tr>
+                    <tr>
+                        <th>Rune</th>
+                        <th>Rareté</th>
+                        <th>Prérequis</th>
+                        <th>Effets</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>				
+    </div>
+    <div>
+        <h4 id="armes_runiques">Armes</h4>
+        <table class="table table-XL shadow rounded" id="table_weapon_runestone">
+            <thead>
+                <tr>
+                    <th colspan="4">Pierre Runique pour Arme</th>
+                </tr>
+                <tr>
+                    <th>Rune</th>
+                    <th>Rareté</th>
+                    <th>Prérequis</th>
+                    <th>Effets</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</section>
+<section>
+    <h2 id="depenses">Dépenses</h2>
+    <div>
+        <h3 id="train_de_vie">Train de vie</h3>
+        <table class="table table-XL shadow rounded">
+            <thead>
+                <tr>
+                    <th colspan="2">Trains de vie</th>
+                </tr>
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Cout quotidien</th>
+                </tr>
+                <tbody>
+                    <tr>
+                        <td title="wretched">Mendiant</td>
+                        <td data-label='Coût quotidien'>-</td>
+                    </tr>
+                    <tr>
+                        <td title="squalid">Misérable</td>
+                        <td data-label='Coût quotidien'>1 pa</td>
+                    </tr>
+                    <tr>
+                        <td title="poor">Pauvre</td>
+                        <td data-label='Coût quotidien'>2 pa</td>
+                    </tr>
+                    <tr>
+                        <td title="modest">Modeste</td>
+                        <td data-label='Coût quotidien'>1 po</td>
+                    </tr>
+                    <tr>
+                        <td title="comfortable">Comfortable</td>
+                        <td data-label='Coût quotidien'>2 po</td>
+                    </tr>
+                    <tr>
+                        <td title="wealthy">Riche</td>
+                        <td data-label='Coût quotidien'>4 po</td>
+                    </tr>
+                    <tr>
+                        <td title="aristocratic">Aristocrate</td>
+                        <td data-label='Coût quotidien'>10+ po</td>
+                    </tr>
+                </tbody>
+            </thead>
+        </table>
+    </div>
+    <div>
+        <h3 id="artisan">Coût d'un artisan</h3>
+        <table class="table table-XL shadow rounded">
+            <thead>
+                <tr>
+                    <th colspan="5">Coût d'un artisan</th>
+                </tr>
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Cout </th>
+                    <th>Cout hebdomadaire</th>
+                    <th>Rareté</th>
+                    <th>Bonus (base + carac)</th>
+                </tr>
+                <tbody>
+                    <tr>
+                        <td title="journeyman">Compagnon</td>
+                        <td data-label='Coût'>1 po</td>
+                        <td data-label='Coût hebdomadaire'>6 po</td>
+                        <td data-label='Rareté'>Commune</td>
+                        <td data-label='Bonus' title="(+2+0)">+2</td>
+                    </tr>
+                    <tr>
+                        <td title="craftsman">Artisan</td>
+                        <td data-label='Coût'>5 po</td>
+                        <td data-label='Coût hebdomadaire'>30 po</td>
+                        <td data-label='Rareté'>Inhabituelle</td>
+                        <td data-label='Bonus' title="(+3+1)">+4</td>
+                    </tr>
+                    <tr>
+                        <td title="artisan">Spécialiste</td>
+                        <td data-label='Coût'>10 po</td>
+                        <td data-label='Coût hebdomadaire'>60 po</td>
+                        <td data-label='Rareté'>Rare</td>
+                        <td data-label='Bonus' title="(+6+2)">+8</td>
+                    </tr>
+                    <tr>
+                        <td title="master">Maître</td>
+                        <td data-label='Coût'>20 po</td>
+                        <td data-label='Coût hebdomadaire'>120 po</td>
+                        <td data-label='Rareté'>Très Rare</td>
+                        <td data-label='Bonus' title="(+8+3)">+11</td>
+                    </tr>
+                    <tr>
+                        <td title="grandmaster">Grand Maître</td>
+                        <td data-label='Coût'>50 po</td>
+                        <td data-label='Coût hebdomadaire'>300 po</td>
+                        <td data-label='Rareté'>Légendaire</td>
+                        <td data-label='Bonus' title="(+10+4)">+14</td>
+                    </tr>
+                </tbody>
+            </thead>
+        </table>
+        <p><strong>Cout:</strong> représente le cout de base pour engager l'artisan ainsi que le cout quotidien.</p>
+        <p><strong>Cout hebdomadaire:</strong> cout à la semaine.</p>
+        <p><strong>Rareté:</strong> le niveau minimum que doit avoir l'artisant selon la rareté de l'objet voulu.</p>
+        <p><strong>Bonus:</strong> Les bonus sont donnés à titre indicatifs. Un mauvais artisant peut avoir moins et un bon peut avoir plus.</p>
+        <p>A partir du niveau spécialiste, les valeurs de bonus sont les minimums (pas de mauvais spécialistes) et l'artisan a l'expertise dans la compétence.</p>
+        <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+    </div>
+</section>
+<section>
+    <h2 id="composant" title="HHH">Récolte de composants</h2>
+    <p>Récolter certaines parties du corps des créatures vaincues.</p>
+    <div>
+        <h3 id="evaluer">Evaluation</h3>
+        <p>Avant de commencer à dépecer et découper un corps, on peut évaluer ce qui est récupérable.</p>
+        <ul>
+            <li>examiner le corps pendant au moins 1 min.</li>
+            <li>jet d'Int DD = 8 + CR.</li>
+            <li>Selon le type de créature, ajouter ou non le bonus de maitrise.
+                <ul>
+                    <li><strong>Arcanes: </strong> aberrations, céleste, élémentaires, fées, fiélons, morts vivants.</li>
+                    <li><strong>Investigation: </strong> construct, gelées</li>
+                    <li><strong>Médecine: </strong> géants, humanoïdes</li>
+                    <li><strong>Nature: </strong> bêtes, dragons, monstrosités, végétaux</li>
+                </ul>
+            </li>
+            <li>1 seul jet d'évaluation par créature par personnage.</li>
+        </ul>
+        <p>Une réussite octroie la connaissance des parties récupérables (et de la difficultés à les récupérer), des outils nécessaires, des risques encourus et donne l'avantage sur les jets de récoltes fait sur cette créature par le personnage.</p>
+        <p>Un personnage ayant réussit son jet d'évaluation peut assister un autre pour la récolte, lui faisant bénéficier de l'avantage.</p>
+    </div>
+    <div>
+        <h3 id="recolte">Récolte</h3>
+        <p>Un jet de récolte est un jet de Dex (avec le bonus de maitrise si le personnage maitrise la compétence permettant d'évaluer la créature).</p>
+        <p>Le DD dépend de la partie récoltée.</p>
+        <p>Toutes les parties dont le DD est inférieures ou égales au score sont récoltées.</p>
+        <p>1 seul jet de récolte par créature.</p>
+        <p>La récolte prend 1 min par [DD/5] (DD min pour créature énorme et DDx2 pour créature gargantuesque).</p>
+        <p>Si le corps de la créature a été endommagé (coup critique, dégâts de feu ou d'acide) certaines parties peuvent être impossible ou plus difficile à récolter (+5 au DD).</p>
+        <div>
+            <h4>Dégradation du corps</h4>
+            <p>1 h après la mort: la peau est inutilisable.</p>
+            <p>1 j après la mort: le sang et les tissus mous (yeux) sont inutilisables.</p>
+            <p>3 j après la mort: les organes internes sont inutilisables.</p>
+            <p>7 j après la mort: la carcasse et tout les tissus sont inutilisables.</p>
+            <p>Les os, griffes, poils et dents se conservent indéfinement.</p>
+        </div>
+        <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+    </div>
+</section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}" defer></script>
+    <script src="{{ asset('js/gear.js') }}" defer></script>
+{% endblock %}

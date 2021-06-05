@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item" id="top" title="{{ backgrounds|length }}">Historiques</h1>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message|raw }}
+	</div>
+{% endif %}
+<h4><a href="https://www.aidedd.org/regles/historiques/">Historiques sur AideDD</a></h4>
+<div class="btn-list">
+    {% for background in backgrounds %}
+        <a href="#background_{{ background.id }}" class="button btn btn-secondary">{{ background.name }}</a>
+    {% endfor %}
+</div>
+<div>
+    {% for background in backgrounds %}
+        <div class="feat-header" id="background_{{ background.id }}">
+            <div>
+                <h2 title="{{ background.idsource.label }} {{ background.page }}">{{ background.name }}</h2>
+            </div>
+            <div>
+                <p>{{ background.idsource.label }} {{ background.page }}</p>
+            </div>
+        </div>
+        <p><strong>Compétences: </strong>{{ background.skills }}</p>
+        {% if background.tools|length > 1 %}
+        <p><strong>Outils: </strong>{{ background.tools }}</p>
+        {% endif %}
+        {% if background.languages|length > 1 %}
+        <p><strong>Langues: </strong>{{ background.languages }}</p>
+        {% endif %}
+        <p><strong>Equipement: </strong>{{ background.gear }}</p>
+        <p><strong>Aptitude: </strong>{{ background.featureName }}</p>
+        <p>{{ background.feature }}</p>
+        <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+    {% endfor %}    
+</div>
+{% endblock %}

@@ -12,25 +12,25 @@
 </h2>
 <div class="center-item" id="filter-form">
 {{ form_start(formSubclassTrait) }}  
-    <div class="form-1 form-trait center-item">
+    <div class="form-1 form-flex size-XL">
         {# name #}
-        <div class="trait-name"> 
+        <div class="frm-input"> 
             {{ form_row(formSubclassTrait.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
         {# level #}
-        <div class="trait-lvl">   
+        <div class="frm-input">   
             {{ form_row(formSubclassTrait.level,{'attr': {'class': "form-control"}, 'label' : "Niveau"})}}
         </div>
-        {# soubclass #}
-        <div class="trait-subclass">   
+        {# subclass #}
+        <div class="frm-select">   
             {{ form_row(formSubclassTrait.idSubclass,{'attr': {'class': "form-control"}, 'label' : "Sous classe"})}}
         </div>
         {# description #}
-        <div class="trait-desc"> 
+        <div class="frm-textarea"> 
             {{ form_row(formSubclassTrait.description,{'attr': {'class': "form-control"}, 'label' : "Description"})}}  
         </div>        
         {# submit #}
-        <div class="trait-submit">   
+        <div class="frm-ok">   
             <button type="submit" class="btn btn-success" >
                     Ajouter
             </button>

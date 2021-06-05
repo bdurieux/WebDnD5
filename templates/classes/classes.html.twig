@@ -1,5 +1,37 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+<section class="sidenav" id="side_menu">
+    <button class="dropdown-btn">
+        <a href="#top">Top</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#classes">Classes</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#niveau">Niveaux</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#styles">Styles de combat</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#manoeuvres">Manoeuvres de combat</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+</section>
 <h2 class="center-item">
     <button class="btn btn-secondary" onclick="toggleForm()">
         Nouvelle classe
@@ -7,49 +39,49 @@
 </h2>
 <div class="center-item" id="filter-form">
 {{ form_start(formClasse) }}  
-    <div class="form-1 form-src center-item">
+    <div class="form-1 form-flex size-XL">
         {# name #}
-        <div class=""> 
+        <div class="frm-input"> 
             {{ form_row(formClasse.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
         {# description #}
-        <div class=""> 
+        <div class="frm-input"> 
             {{ form_row(formClasse.description,{'attr': {'class': "form-control"}, 'label' : "Description"})}}  
         </div>
         {# armors #}
-        <div class="">   
+        <div class="frm-input">   
             {{ form_row(formClasse.armors,{'attr': {'class': "form-control"}, 'label' : "Armures"})}}
         </div>  
         {# weapons #}
-        <div class="">   
+        <div class="frm-input">   
             {{ form_row(formClasse.weapons,{'attr': {'class': "form-control"}, 'label' : "Armes"})}}
         </div>
         {# tools #}
-        <div class="">   
+        <div class="frm-input">   
             {{ form_row(formClasse.tools,{'attr': {'class': "form-control"}, 'label' : "Outils"})}}
         </div>
         {# saves #}
-        <div class="">   
+        <div class="frm-input">   
             {{ form_row(formClasse.saves,{'attr': {'class': "form-control"}, 'label' : "Sauvegardes"})}}
         </div>
         {# skills #}
-        <div class="">   
+        <div class="frm-input">   
             {{ form_row(formClasse.skills,{'attr': {'class': "form-control"}, 'label' : "Compétences"})}}
         </div>
         {# hit_dice #}
-        <div class="">   
+        <div class="frm-select">   
             {{ form_row(formClasse.hit_dice,{'attr': {'class': "form-control"}, 'label' : "Dés de Vie (BUG)"})}}
         </div>
         {# source #}
-        <div class="form-group creature-src center-item">   
+        <div class="frm-select">   
             {{ form_row(formClasse.idSource,{'attr': {'class': "form-control"}, 'label' : "Source"})}}
         </div>
         {# page #}
-        <div class="form-group creature-page center-item">  
+        <div class="frm-input">  
             {{ form_row(formClasse.page,{'attr': {'class': "form-control"}, 'label' : "Page"})}} 
         </div>             
         {# submit #}
-        <div class="">   
+        <div class="frm-ok">   
             <button type="submit" class="btn btn-success" >
                     Ajouter
             </button>
@@ -58,53 +90,64 @@
     {{ form_end(formClasse) }}
 </div>
 <div >
-    <section id="section_source">
-        <h2>Sources</h2>
-        <form id="source-form" class="">
-            Choisissez les sources à utiliser:
-            <ul>
-                <li><input id="chb_phb" type="checkbox" checked value="PHB"><b><label for="chb_phb">PHB</label></b></li>
-                <li><input id="chb_tce" type="checkbox" checked value="TCE"><b><label for="chb_tce">TCE/ERLW</label></b></li>
-                <li><input id="chb_botd" type="checkbox" value="BOTD"><b><label for="chb_botd" class="unofficial">BotD</label></b></li>
-                <li><input id="chb_ppkc" type="checkbox" value="PPKC"><b><label for="chb_ppkc" class="unofficial">PPKC</label></b></li>
-            </ul>
-            <input type="button" id="sourceClick" value="Valider" onclick="getClassBySource()" />
-        </form>
-        <p class="unofficial">Non officiel</p>
-    </section>
-</div>
-<div>
     <section>
-        <h2>Table des Classes</h2>
-        <table id="table_classe" class="table table-center" >
+        <h2 id="classes">Table des Classes</h2>
+        <table id="table_classe" class="table table-center shadow rounded" >
             <thead>
                 <tr>
                     <th>Classe</th>
                     <th>Description</th>
-                    <th>Caractéristique principale</th>
                     <th>Dé de vie</th>
                     <th>Sauvegarde</th>
                 </tr>
             </thead>
             <tbody>
-                
+            {% for classe in classes %}
+                <tr>
+                    <td title="{{classe.idSource.name }} {{  classe.page }}" >
+                        <a href="{{ path('class', { id: classe.id }) }}" class="button btn btn-secondary">{{ classe.name }}</a>
+                    </td>
+                    <td >{{ classe.description }}</td>
+                    <td data-label=DV>{{ classe.hitDice }}</td>
+                    <td data-label=Sauvegarde>{{ classe.saves }}</td>
+                </tr>
+            {% endfor %}                
             </tbody>
         </table>
-        <button onclick="toggleElement(src)" class="btn btn-secondary">Source:</button>
-        <div id="src">
-            <p>survoler le nom de la classe pour connaitre la source.
-                <ul>
-                {% for source in sources %}
-                    <li {% if source.official == 0 %}
-                            class="unofficial"
-                        {% endif %}><strong>{{ source.label }}: </strong>{{ source.name }}</li>
-                {% endfor %}
-                </ul>
-            </p>
-        </div>
-    </section>
+    </section>    
+</div>
+<div>
+    <h2 id="niveau">Evolution selon le niveau</h2>
+    <table class="table table-center table-XL shadow rounded">
+        <thead>
+            <tr>
+                <th>Niveau</th>
+                <th>XP requise</th>
+                <th>Bonus Maitrise</th>
+                <th>Extra</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for key, xp in xp_by_level %}
+            <tr>
+                <td data-label=Niveau>{{ key }}</td>
+                <td data-label=XP>{{ xp }}</td>
+                <td data-label=Maitrise>+ {{ 2 + (key/4.2)|round(0,'floor') }}</td>
+                <td data-label=Extra>
+                {% if key % 4 == 0 %}
+                    1 don ou 2 points de caractéristique à répartir (max 20)
+                {% else %}
+                    --
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div>    
     <section>
-        <h2>Styles de combat</h2>
+        <h2 id="styles">Styles de combat</h2>
         <p title="PHB 72"><strong>Archery: </strong>+2 aux jets d'attaque avec des armes à distance.</p>
         <p title="TCE 53"><strong>Blessed Warrior: </strong>apprend 2 tour de magie (clerc) (basé sur Cha).</p>
         <p title="TCE 41"><strong>Blind Fighting: </strong>blindsight (3m).</p>
@@ -118,7 +161,7 @@
         <p title="TCE 42"><strong>Thrown Weapon Fighting: </strong>les armes avec la propriété lancer peuvent être dégainer en même temps que l'action d'attaque. +2 aux dégâts avec les armes de lancer.</p>
         <p title="PHB 72"><strong>Two-weapon Fighting: </strong>en combat à 2 armes, vous pouvez ajouter votre bn de caractéristique aux dégâts des 2 mains.</p>
         <p title="TCE 42"><strong>Unarmed Fighting: </strong>vos attaques à mains nues infligent 1d6+[bn For]. Si vous n'avez aucune autre arme ou bouclier, les dégâts passent à 1d8+[bn For]. Au début de vos tours, vous pouvez infliger 1d4 dégâts contondants à une créature qui est en lutte avec vous.</p>
-        <table id="table_fighting_style" class="table table-center table-large" >
+        <table id="table_fighting_style" class="table table-center table-large table-font shadow rounded" >
             <thead>
                 <tr>
                     <th colspan="4">Style de combat par classe</th>
@@ -133,114 +176,187 @@
             <tbody>
                 <tr>
                     <td>Archery</td>
-                    <td>X</td>
-                    <td></td>
-                    <td>X</td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>-</td>
+                    <td data-label=Ranger>X</td>
                 </tr>
                 <tr>
                     <td>Blessed Warrior</td>
-                    <td></td>
-                    <td>X</td>
-                    <td></td>
+                    <td data-label=Fighter>-</td>
+                    <td data-label=Paladin>X</td>
+                    <td data-label=Ranger>-</td>
                 </tr>
                 <tr>
                     <td>Blind Fighting</td>
-                    <td>X</td>
-                    <td>X</td>
-                    <td>X</td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>X</td>
+                    <td data-label=Ranger>X</td>
                 </tr>
                 <tr>
                     <td>Defense</td>
-                    <td>X</td>
-                    <td>X</td>
-                    <td>X</td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>X</td>
+                    <td data-label=Ranger>X</td>
                 </tr>
                 <tr>
                     <td>Druidic Warrior</td>
-                    <td></td>
-                    <td></td>
-                    <td>X</td>
+                    <td data-label=Fighter>-</td>
+                    <td data-label=Paladin>-</td>
+                    <td data-label=Ranger>X</td>
                 </tr>
                 <tr>
                     <td>Duelling</td>
-                    <td>X</td>
-                    <td>X</td>
-                    <td></td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>X</td>
+                    <td data-label=Ranger>-</td>
                 </tr>
                 <tr>
                     <td>Great Weapon Fighting</td>
-                    <td>X</td>
-                    <td>X</td>
-                    <td></td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>X</td>
+                    <td data-label=Ranger>-</td>
                 </tr>
                 <tr>
                     <td>Interception</td>
-                    <td>X</td>
-                    <td>X</td>
-                    <td></td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>X</td>
+                    <td data-label=Ranger>-</td>
                 </tr>
                 <tr>
                     <td>Protection</td>
-                    <td>X</td>
-                    <td>X</td>
-                    <td></td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>X</td>
+                    <td data-label=Ranger>-</td>
                 </tr>
                 <tr>
                     <td>Superior Technique</td>
-                    <td>X</td>
-                    <td></td>
-                    <td></td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>-</td>
+                    <td data-label=Ranger>-</td>
                 </tr>
                 <tr>
                     <td>Trown Weapon Fighting</td>
-                    <td>X</td>
-                    <td></td>
-                    <td>X</td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>-</td>
+                    <td data-label=Ranger>X</td>
                 </tr>
                 <tr>
                     <td>Two-weapon Fighting</td>
-                    <td>X</td>
-                    <td></td>
-                    <td>X</td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>-</td>
+                    <td data-label=Ranger>X</td>
                 </tr>
                 <tr>
                     <td>Unarmed Fighting</td>
-                    <td>X</td>
-                    <td></td>
-                    <td></td>
+                    <td data-label=Fighter>X</td>
+                    <td data-label=Paladin>-</td>
+                    <td data-label=Ranger>-</td>
                 </tr>
             </tbody>
         </table>
     </section>
     <section>
-        <h2>Manoeuvres de combat</h2>
-        <p>Utiliser une manoeuvre nécessite de dépenser 1 dé de supériorité.</p>
+        <h2 id="manoeuvres">Manoeuvres de combat</h2>
+        <p>Utiliser une manoeuvre nécessite de dépenser 1 Dé de Supériorité (DS).</p>
         <p>Si un JS est nécessaire: <strong> DD = 8 + [bn maitrise] + [bn For/Dex]</strong>.</p>
         <p>Liste des manoeuvres:
-            <ul>
-                <li title="TCE 43"><strong>Ambush: </strong></li>
-                <li title="TCE 43"><strong>Bait and Switch: </strong></li>
-                <li title="TCE 43"><strong>Brace: </strong></li>
-                <li title="PHB 74"><strong>Commander's Strike: </strong></li>
-                <li title="TCE 43"><strong>Commanding Presence: </strong></li>
-                <li title="PHB 74"><strong>Disarming Attack: </strong></li>
-                <li title="PHB 74"><strong>Distracting Strike: </strong></li>
-                <li title="PHB 74"><strong>Evasive Footwork: </strong></li>
-                <li title="PHB 74"><strong>Feinting Attack: </strong></li>
-                <li title="PHB 74"><strong>Goading Attack: </strong></li>
-                <li title="TCE 43"><strong>Grappling Strike: </strong></li>
-                <li title="PHB 74"><strong>Lunging Attack: </strong></li>
-                <li title="PHB 74"><strong>Maneuvering Attack: </strong></li>
-                <li title="PHB 74"><strong>Menacing Attack: </strong></li>
-                <li title="PHB 74"><strong>Parry: </strong></li>
-                <li title="PHB 74"><strong>Precision Attack: </strong></li>
-                <li title="PHB 74"><strong>Pushing Attack: </strong></li>
-                <li title="TCE 43"><strong>Quick Toss: </strong></li>
-                <li title="PHB 74"><strong>Rally: </strong></li>
-                <li title="PHB 74"><strong>Riposte: </strong></li>
-                <li title="PHB 74"><strong>Sweeping Attack: </strong></li>
-                <li title="TCE 43"><strong>Tactical Assesment: </strong></li>
-                <li title="PHB 74"><strong>Trip Attack: </strong></li>
+            <ul class="list">
+                <li title="TCE 43">
+                    <strong>Ambush </strong>
+                    {% if logged %}: ajoute 1 DS à un jet d'Initiative ou de Discrétion.{% endif %}
+                </li>
+                <li title="TCE 43">
+                    <strong>Bait and Switch </strong>
+                    {% if logged %}: échange de position avec un allié en mêlée et ajoute 1 DS à la CA.{% endif %}
+                </li>
+                <li title="TCE 43">
+                    <strong>Brace </strong>
+                    {% if logged %}: 1 DS & réaction quand un ennemi arrive en mêlée pour lui porter une attaque. Ajoute le DS aux dégâts.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Commander's Strike </strong>
+                    {% if logged %}: 1 DS & 1 de vos attaques pour permettre à un allié d'utiliser sa réaction pour porter 1 attaque et ajouter le DS aux dégâts.{% endif %}
+                </li>
+                <li title="TCE 43">
+                    <strong>Commanding Presence </strong>
+                    {% if logged %}: ajoute 1 DS à un jet d'Intimidation, de Performance ou de Persuasion.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Disarming Attack </strong>
+                    {% if logged %}: dépense 1 DS après une attaque réussie pour tenter de désarmer la cible. Ajoute le DS aux dégâts. La cible doit réussir 1 JS For ou lâcher ce qu'elle tient.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Distracting Strike </strong>
+                    {% if logged %}: dépense 1 DS après une attaque réussie pour distraire la cible. Ajoute le DS aux dégâts. La prochaine attaque contre la cible avant votre prochain tour se fait avec avantage.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Evasive Footwork </strong>
+                    {% if logged %}: ajoute 1 DS à votre CA quand vous bougez jusqu'à ce que vous cessiez de bouger.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Feinting Attack </strong>
+                    {% if logged %}: 1 DS & 1 action bonus pour feinter une cible à 1,5m. Votre prochaine attaque contre le cible se fait avec avantage et ajoute le DS aux dégâts.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Goading Attack </strong>
+                    {% if logged %}: dépense 1 DS après une attaque réussie pour provoquer la cible. Ajoute le DS aux dégâts. La cible doit réussir 1 JS Sag ou être désavantagée sur toutes ses attaques pendant 1round.{% endif %}
+                </li>
+                <li title="TCE 43">
+                    <strong>Grappling Strike </strong>
+                    {% if logged %}: dépense 1 DS après une attaque en mêlée réussie pour engager une lutte. Ajoute le DS au jet d'Athlétisme.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Lunging Attack </strong>
+                    {% if logged %}: 1 DS quand vous faites une attaque en mêlée pour augmenter votre allonge de 1,5m. Ajoute le DS aux dégâts.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Maneuvering Attack </strong>
+                    {% if logged %}: dépense 1 DS après une attaque en mêlée réussie pour placer 1 allié en position avantageuse. 
+                    Ajoute le DS aux dégâts. 1 allié de votre choix peut alors se déplacer de la moitié de son mouvement sans provoquer d'AoO de la part de votre cible.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Menacing Attack </strong>
+                    {% if logged %}: dépense 1 DS après une attaque en mêlée réussie pour tenter d'effrayer la cible. Ajoute le DS aux dégâts. 
+                    La cible doit réussir 1 JS Sag ou être effrayée pour 1 round.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Parry </strong>
+                    {% if logged %}: 1 DS & 1 réaction quand vous êtes touché en mêlée pour réduire les dégâts de [bn Dex + DS].{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Precision Attack </strong>
+                    {% if logged %}: 1 DS quand vous faites 1 attaque pour l'ajouter au jet d'attaque (avant ou après avoir fait le jet).{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Pushing Attack </strong>
+                    {% if logged %}: dépense 1 DS après une attaque réussie pour tenter de repousser la cible. Ajoute le DS aux dégâts.
+                    La cible doit réussir 1 JS For ou être repoussée de 4,5m.{% endif %}
+                </li>
+                <li title="TCE 43">
+                    <strong>Quick Toss </strong>
+                    {% if logged %}: 1 DS & 1 bonus action pour faire une attaque à distance avec une arme de jet. Ajoute le DS aux dégâts.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Rally </strong>
+                    {% if logged %}: 1 DS & 1 action bonus pour soutenir un allié. 1 allié de votre choix gagne [bn Cha + DS] pvt.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Riposte </strong>
+                    {% if logged %}: 1 DS & 1 réaction quand 1 attaque en mêlée vous rate pour porter 1 contre attaque. Ajoute le DS aux dégâts.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Sweeping Attack </strong>
+                    {% if logged %}: dépense 1 DS après une attaque en mêlée réussie pour tenter de blesser une autre cible. 
+                    Choisissez 1 cible à 1,5m de votre cible initiale, celle-ci subit des dégâts égaux au DS.{% endif %}
+                </li>
+                <li title="TCE 43">
+                    <strong>Tactical Assessment </strong>
+                    {% if logged %}: ajoute 1 DS à un jet d'Investigation, d'Histoire ou de Perspicacité.{% endif %}
+                </li>
+                <li title="PHB 74">
+                    <strong>Trip Attack </strong>
+                    {% if logged %}: dépense 1 DS après une attaque réussie pour tenter de mettre la cible à terre. Ajoute le DS aux dégâts. La cible doit réussir 1 JS For ou être au sol.{% endif %}
+                </li>
             </ul>
         </p>
     </section>
@@ -248,6 +364,5 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/classe.js') }}"></script>
     <script src="{{ asset('js/script.js') }}" defer></script>
 {% endblock %}

@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<h1 class="center-item">Types</h1>
+<h1 class="center-item">Cadre de Campagne</h1>
 <h2 class="center-item">
     <button class="btn btn-secondary" onclick="toggleForm()">
     {% if editMode %}
-        Modifier le type
+        Modifier le cadre
     {% else %}
-        Nouveau Type
+        Nouveau cadre
     {% endif %}
     </button>
 </h2>
@@ -16,48 +16,50 @@
 	</div>
 {% endif %}
 <div class="center-item" id="filter-form">
-    {{ form_start(formType) }}
-    <div class="form-1 form-flex size-XL" style="margin:auto">    
+{{ form_start(formSetting) }}  
+    <div class="form-1 form-flex size-XL">
+        {# name #}
         <div class="frm-input"> 
-            {{ form_row(formType.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+            {{ form_row(formSetting.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
+        {# submit #}
         <div class="frm-ok">   
             <button type="submit" class="btn btn-success" >
                 {% if editMode %}
-                Sauver
+                    Sauver
                 {% else %}
-                Ajouter
+                    Ajouter
                 {% endif %}
             </button>
-        </div>    
+        </div>
     </div>
-    {{ form_end(formType) }}
+    {{ form_end(formSetting) }}
 </div>
 {% if not editMode %}
 <div>
     <table class="table table-center col-4 table-font">
         <thead>
             <tr>
-                <th colspan="2">Listes des types ({{ types|length }})</th>
+                <th colspan="2">Listes des cadres de campagne ({{ settings|length }})</th>
             </tr>
             <tr>
-                <th>Type</th>
+                <th>Cadre</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-        {% for type in types %}
+        {% for setting in settings %}
             <tr>
-                <td><strong>{{ type.name }}</strong></td>
+                <td><strong>{{ setting.name }}</strong></td>
                 <td class="inline-content">
                     <div class="">
-                        <a href="{{ path('type', { id: type.id })}}" class="button btn btn-primary" >
+                        <a href="{{ path('campagne', { id: setting.id })}}" class="button btn btn-primary" >
                         <strong>Modifier</strong>
                         </a>               
                     </div>
                     <form method="post" class="">
                         <div class="">   
-                            <input type="hidden" name="type_del" value="{{ type.id }}" />
+                            <input type="hidden" name="setting_del" value="{{ setting.id }}" />
                         </div>
                         <div class="">   
                             <input type="submit" value="Supprimer" class="btn btn-danger" />

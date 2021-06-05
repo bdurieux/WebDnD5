@@ -28,7 +28,7 @@ class FeatRepository extends ServiceEntityRepository
         $sql = '
             SELECT f.id, f.name, f.prerequisite, f.description, s.label as source, page 
             FROM feat f 
-                LEFT JOIN source s ON s.id = f.id_source
+                LEFT JOIN dd_source s ON s.id = f.id_source
             GROUP BY f.name 
             ORDER BY f.name             
             ';

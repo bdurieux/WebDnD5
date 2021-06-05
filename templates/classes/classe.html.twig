@@ -8,7 +8,7 @@
 {% endif %}
 <h2>{{ classe.description }}</h2>
 <div>
-	<table class="table table-XL">
+	<table class="table table-XL shadow rounded">
 		<tr>
 			<td><strong>Dés de vie</strong></td>
 			<td>{{ classe.hitDice }}</td>
@@ -36,23 +36,47 @@
 	</table>
 </div>
 <h2 id="liste">Liste des spécialisations disponibles</h2>
-<div class="btn-list">
-    {% for subClass in subClasses %}
-        <a href="#subclass_{{ subClass.id }}" class="button btn btn-secondary">{{ subClass.name }}</a>
-    {% endfor %}
+<div class="">
+	{% for setting in settings %}
+		<h3>Cadre de campagne: {{ setting.name }}</h3>
+		<div class="btn-list">
+		{% for subClass in subClasses %}
+			{% if subClass.setting_id == setting.id %}
+				<a href="#subclass_{{ subClass.id }}" class="button btn btn-secondary">{{ subClass.name }}</a>
+			{% endif %}
+		{% endfor %}
+		</div>
+	{% endfor %}    
 </div>
-{% for subClass in subClasses %}
-	<h3 id="subclass_{{ subClass.id }}" title="{{ subClass.source_name }} {{ subClass.page }}">{{ subClass.name }}</h3>
-	<h4>{{ subClass.description }}</h4>
-	<ul>
-	{% for subclasstrait in subclasstraits %}
-		{% if subclasstrait.id_subclass == subClass.id %}
-		<li><strong>Niveau {{ subclasstrait.level }} - {{ subclasstrait.name }}: </strong><p>{{ subclasstrait.description }}</p></li>
+<div>
+{% for setting in settings %}
+	<h2>{{ setting.name }}</h2>
+	{% for subClass in subClasses %}
+		{% if subClass.setting_id == setting.id %}
+		<div class="feat-header">
+			<div>
+				<h3 id="subclass_{{ subClass.id }}" title="{{ subClass.source_name }} {{ subClass.page }}">{{ subClass.name }}</h3>
+			</div>
+			<div>
+				<p class="{% if not subClass.source_official %}unofficial{% endif %}">{{ subClass.source_label }} {{ subClass.page }}</p>
+			</div>
+		</div> 	
+		<h4 class="{% if not subClass.source_official %}unofficial{% endif %}">{{ subClass.description }}</h4>
+		<ul>
+		{% for subclasstrait in subclasstraits %}
+			{% if subclasstrait.id_subclass == subClass.id %}
+			<li><strong>Niveau {{ subclasstrait.level }} - {{ subclasstrait.name }}: </strong>
+				{% if logged %}
+				<p>{{ subclasstrait.description }}</p>
+				{% endif %}
+			</li>
+			{% endif %}
+		{% endfor %}
+		</ul>
+		<p><a href="#liste" class="button btn btn-secondary">Index</a></p>
 		{% endif %}
-	{% endfor %}
-	</ul>
-	<p><a href="#liste" class="button btn btn-secondary">Index</a></p>
+	{% endfor %} 
 {% endfor %}
-
+</div>
 {% endblock %}
 

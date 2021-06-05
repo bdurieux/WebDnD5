@@ -4,16 +4,19 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\Framework\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\Source;
 use App\Entity\Classe;
 use App\Entity\ClasseOption;
+use App\Entity\Setting;
 use App\Entity\Subclass;
 use App\Entity\SubclassTrait;
 use App\Repository\SourceRepository;
 use App\Repository\ClasseRepository;
 use App\Repository\ClasseOptionRepository;
+use App\Repository\SettingRepository;
 use App\Repository\SubclassRepository;
 use App\Repository\SubclassTraitRepository;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,21 +26,43 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ClassController extends AppController{
     const BASE_TITLE = "Zgrouf - DnD5 - Classes ";
-    const HIT_DICE = [6,8,10,12
-        /* "1" => "6",
-        "2" => "8",
-        "3" => "10",
-        "4" => "12" */
+    const HIT_DICE = [6,8,10,12];
+    const XP_BY_LEVEL = [
+        1 => 0,
+        2 => 300,
+        3 => 900,
+        4 => 2700,
+        5 => 6500,
+        6 => 14000,
+        7 => 23000,
+        8 => 34000,
+        9 => 48000,
+        10 => 64000,
+        11 => 85000,
+        12 => 100000,
+        13 => 120000,
+        14 => 140000,
+        15 => 165000,
+        16 => 195000,
+        17 => 225000,
+        18 => 265000,
+        19 => 305000,
+        20 => 355000
     ];
 
     /**
      * @Route("/class", name="classes")
      */
-    public function showClasses(Request $request,ClasseRepository $classeRepo,SourceRepository $sourceRepo){
+    public function showClasses(Request $request,
+                                ClasseRepository $classeRepo,
+                                SourceRepository $sourceRepo,
+                                SessionInterface $session
+                                ){
         $title = self::BASE_TITLE;
         $entityManager = $this->getDoctrine()->getManager();
         $classe = new Classe();
         $sources = $sourceRepo->findBy(array(),array('official' => 'DESC','name' => 'ASC'));
+        $classes = $classeRepo->findBy(array(),array('name' => 'ASC'));
         // création du formulaire
         $formClasse = $this->createFormBuilder($classe)
                           ->add('name')
@@ -70,7 +95,10 @@ class ClassController extends AppController{
         return $this->render("classes/classes.html.twig",[
             'title' => $title,
             'sources' => $sources,
-            'formClasse' => $formClasse->createView()
+            'classes' => $classes,
+            'xp_by_level' => self::XP_BY_LEVEL,
+            'formClasse' => $formClasse->createView(),
+            'logged' => true //$this->logged($session)
         ]);
     }
 
@@ -154,7 +182,7 @@ class ClassController extends AppController{
         }  
         $entityManager = $this->getDoctrine()->getManager();
         $classes = $classeRepo->findBy(array(),array('name' => 'ASC'));
-        $sources = $sourceRepo->findBy(array(),array('name' => 'ASC'));
+        $sources = $sourceRepo->findBy(array(),array('official' => 'DESC','name' => 'ASC'));
         $subclasses = $subclassRepo->findAllOrdered();        
         // création du formulaire
         $formSubclass = $this->createFormBuilder($subclass)
@@ -180,7 +208,7 @@ class ClassController extends AppController{
             return $this->redirectToRoute('class.subclasses');
         }
         // suppression d'une source
-        if(isset($_POST['option_del'])){       
+        if(isset($_POST['subclass_del'])){       
             $subclass = $subclassRepo->findOneById(array('id' => $_POST['subclass_del']));
             if($subclass){
                 $entityManager->remove($subclass);
@@ -232,17 +260,12 @@ class ClassController extends AppController{
                           ->add('name')
                           ->add('description')                          
                           ->add('idSubclass', EntityType::class, [
+                              //'choices' => $subclasstraits,
                               'class' => Subclass::class,
                               'choice_label' => function(Subclass $subclass) {
-                                return $subclass->getName();
-                            }
-                              /*'choices' => $subClasses ,
-                            'choice_label' => function ($choice, $key, $value) {
-                                return $choice;
-                                } */
-                            ]) 
-                            /* 'choice_label' => 'getName'
-                            ]) */ 
+                                    return $subclass->getName();
+                                }
+                            ])
                           ->add('level')
                           ->getForm();
         $formSubclassTrait->handleRequest($request);
@@ -255,7 +278,7 @@ class ClassController extends AppController{
             return $this->redirectToRoute('class.subclasstraits');
         }
         // suppression d'une source
-        if(isset($_POST['option_del'])){       
+        if(isset($_POST['subclasstrait_del'])){       
             $subclasstrait = $subclasstraitRepo->findOneById(array('id' => $_POST['subclasstrait_del']));
             if($subclasstrait){
                 $entityManager->remove($subclasstrait);
@@ -282,7 +305,9 @@ class ClassController extends AppController{
                             $id,
                             SubclassRepository $subclassRepo,
                             ClasseRepository $classeRepo,
-                            SubclassTraitRepository $subclasstraitRepo
+                            SettingRepository $settingRepo,
+                            SubclassTraitRepository $subclasstraitRepo,
+                            SessionInterface $session
                             ){
         $classe = $classeRepo->findOneById(array('id' => $id));
         // no class match the id
@@ -294,13 +319,16 @@ class ClassController extends AppController{
         $title = self::BASE_TITLE . $subtitle;
         $message = '';
         $subclasstraits = $subclasstraitRepo->findAllOrdered();
-
+        $settings = $settingRepo->findForExistingSubclassByIdClass($id);
+        //dd($subClasses);
         return $this->render("classes/classe.html.twig",[
             'message' => $message,
             'title' => $title,
             'classe' => $classe,
+            'settings' => $settings,
             'subClasses' => $subClasses,
-            'subclasstraits' => $subclasstraits
+            'subclasstraits' => $subclasstraits,
+            'logged' => $this->logged($session)
         ]);
     }
 }

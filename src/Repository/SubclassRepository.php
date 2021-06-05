@@ -29,7 +29,7 @@ class SubclassRepository extends ServiceEntityRepository
                 SELECT s.id, s.name, s.description, s.id_source, r.label as source_label, s.page, c.name as class_name 
                 FROM subclass s
                     LEFT JOIN classe c ON c.id = s.id_class
-                    LEFT JOIN source r ON r.id = s.id_source
+                    LEFT JOIN dd_source r ON r.id = s.id_source
                 ORDER BY c.name, s.name
             ';
         $stmt = $conn->prepare($sql);
@@ -37,19 +37,20 @@ class SubclassRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
     }
 
-    /* @return Subclass[] Returns an array of subclass objects of class $idClass
+    /* @return Subclass[] Returns an array of subclass objects of class $idClass    
     */    
     public function findByIdClassOrdered($idClass)
     {
         $conn = $this->getEntityManager()
             ->getConnection();
         $sql = '
-                SELECT s.id, s.name, s.description, s.id_source, r.label as source_label, r.name as source_name, s.page, c.name as class_name 
-                FROM subclass s
+                SELECT s.id, s.name, s.description, s.id_source, r.label as source_label, r.name as source_name, s.page,
+                         r.official as source_official, c.name as class_name, t.name as setting_name, t.id as setting_id 
+                FROM setting t  
+                    LEFT JOIN dd_source r ON t.id = r.id_setting 
+                    LEFT JOIN subclass s ON r.id = s.id_source 
                     LEFT JOIN classe c ON c.id = s.id_class
-                    LEFT JOIN source r ON r.id = s.id_source
-                WHERE s.id_class = ?
-                ORDER BY c.name, s.name
+                WHERE s.id_class = ? ORDER BY t.name, s.name
             ';
         $stmt = $conn->prepare($sql);
         $stmt->execute(array($idClass));

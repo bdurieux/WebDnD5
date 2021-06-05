@@ -1,0 +1,799 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item" id="">Combat</h1>
+<section class="sidenav" id="side_menu">
+    <button class="dropdown-btn top-link">
+        <a href="#top">Top</a>
+    </button>
+    <div class="dropdown-container top-link">
+        <a href="#"></a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#regles">Règles</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#passif">Test passif</a>
+        <a href="#soulever">Soulever</a>
+        <a href="#concentration">Concentration</a>
+        <a href="#moral">Moral</a>
+        <a href="#initiative">Initiative</a>
+        <a href="#attaquer">Attaquer</a>
+        <a href="#action">Action</a>
+        <a href="#deplacement">Déplacement</a>
+        <a href="#lumiere">Visibilité</a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#soins">Dégâts et Soins</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#types">Types dégâts</a>
+        <a href="#graves">Blessures graves</a>
+        <a href="#massifs">Dégâts massifs</a>
+        <a href="#repos">Repos</a>
+        <a href="#conditions">Conditions</a>
+        <a href="#epuisement">Epuisement</a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#caracteristique">Caractéristiques</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#creation">Creation</a>
+    </button>
+    <div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+</section>
+<div>
+    <section>
+        <h2 id="regles">Règles générales</h2>
+        <p>Un jet se fait en lancant 1d20 et en ajoutant un modificateur au résultat (un bonus de caractéristique et le bonus de maitrise si le personnage est compétent).</p>
+        <p>Si le résultat dépasse le score fixé par le MJ, c'est une réussite.</p>
+        <p>En cas d'Avantage sur le jet, lancer 2d20 et choisir le meilleur score.</p>
+        <p>En cas de Désavantage sur le jet, lancer 2d20 et choisir le pire score.</p>
+        <div>
+            <h3 id="passif">Test Passif</h3>
+            <p>Pas de jet de dés, le score est de 10 + modificateurs.</p>
+            <ul>
+                <li>+5 si avantage</li>
+                <li>-5 si désavantage</li>
+            </ul>
+        </div>
+        <div>
+            <h3 id="soulever">Soulever et Transporter</h3>
+            <p><strong>Capacité de charge = For x7.5</strong> (en kg). (Poids que le PJ peut porter sans malus).</p>
+            <p><strong>Pousser, tirer, soulever </strong>: un PJ peut pousser, tirer ou soulever jusqu’au double de sa capacité de charge, soit For x15 (en kg).</p>
+            <p>Si la charge dépasse la capacité de charge, la vitesse est réduite à 1.5 m.</p>
+            <p><strong>Taille et Force </strong>: pour chaque catégorie de taille au dessus de Moyenne, doublez la capacité de charge.</p>
+            <p>Pour une créature de petite taille, divisez la capacité de charge par 2.</p>
+        </div>
+        <div>
+            <h3 id="concentration">Concentration</h3>
+            <p>Lancer un sort demandant de la concentration annule la concentration d’un sort préexistant.</p>
+            <p>Si le lanceur de sort subit des dégâts alors qu’il se concentre sur un sort, il doit réussir un JS de Con afin de ne pas perdre sa concentration. Le DD du sort est de 10 ou 50% des dégâts subis (prendre le plus haut).</p>
+        </div>
+        <div>
+            <h3 id="moral">Moral</h3>
+            <p>Une créature est susceptible de fuir si:</p>
+            <ul>
+                <li>Surprise</li>
+                <li>Tombe en dessous de 50% de son max de PV pour la première fois</li>
+                <li>Ne peut infliger de dégâts à son adversaire durant ce tour</li>
+            </ul>
+            <p>Un groupe de créatures peut fuir quand:</p>
+            <ul>
+                <li>Toutes sont surprises</li>
+                <p>Le chef est incapacité, réduit à 0 PV, fait prisonnier ou mis hors combat<:
+                <p>Perd la moitié de ses membres sans infliger de perte aux opposants</li>
+            </ul>
+            <p>Le leader fait un jet de Charisme DD 10 (désavantagé si  les chances de victoire sont très faibles).</p>
+        </div>
+        <div>
+            <h3 id="initiative">Initiative</h3>
+            <p>1d20 + [bonus Dex]</p>
+            <p>Agit dans l'ordre décroissant de l'Initiative.</p>
+            <div class="even-columns">
+                <table class="table table-font">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Modificateur d'Initiative selon l'attaque</th>
+                        </tr>
+                        <tr>
+                            <th>Type d'attaque</th>
+                            <th>Bonus Initiative</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lancer un sort</td>
+                            <td>-(Niveau du sort)</td>
+                        </tr>
+                        <tr>
+                            <td>Mêlée, arme lourde</td>
+                            <td>-2</td>
+                        </tr>
+                        <tr>
+                            <td>Mêlée, arme légère ou finesse</td>
+                            <td>+2</td>
+                        </tr>
+                        <tr>
+                            <td>Mêlée, arme à 2 m</td>
+                            <td>-2</td>
+                        </tr>
+                        <tr>
+                            <td>Recharger une arme</td>
+                            <td>-5</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-font">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Modificateur d'Initiative selon la taille de la cible</th>
+                        </tr>
+                        <tr>
+                            <th>Taille de la créature</th>
+                            <th>Bonus Initiative</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Minuscule</td>
+                            <td>+5</td>
+                        </tr>
+                        <tr>
+                            <td>Petite</td>
+                            <td>+2</td>
+                        </tr>
+                        <tr>
+                            <td>Moyenne</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Grande</td>
+                            <td>-2</td>
+                        </tr>
+                        <tr>
+                            <td>Enorme</td>
+                            <td>-5</td>
+                        </tr>
+                        <tr>
+                            <td>Gargantuesque</td>
+                            <td>-8</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <h3 id="attaquer" title="PHB 192">Attaquer</h3>
+            <p>Caractéristique d'attaque:</p>
+            <ul>
+                <li><strong>For: </strong>mêlée (par défaut)</li>
+                <li><strong>Dex: </strong>distance et lancer (par défaut) & mêlée si légère</li>
+                <li><strong>Int, Sag ou Cha: </strong>attaque magique (mêlée ou distance); la caractéristique dépend de la classe/sous-classe.</li>
+            </ul>
+            <p>1d20 + [bonus caractéristique d'attaque] + [bonus de maitrise]</p>
+            <ul>            
+                <li><strong>Maladresse: </strong>1 naturel: raté automatique.</li>
+                <li><strong>Echec: </strong>Résultat < CA cible</li>
+                <li><strong>Réussite: </strong>Résultat >= CA cible: l'attaque touche.</li>
+                <li><strong>Réussite critique: </strong>20 naturel: touché automatique et dégâts critiques (lancer 2 fois les dés et ajouter 1 fois les modificateurs)</li>
+            </ul>
+            <p>Attaquer un adversaire invisible se fait avec Désavantage.</p>
+            <p>Attaquer un adversaire qui ne vous voit pas se fait avec Avantage, mais révèle votre présence.</p>
+            <div>
+                <h4 title="PHB 195">Attaque à distance</h4>
+                <p>La cible doit être à portée. (La portée dépend de l'arme utilisée).</p>
+                <p>Vous attaquez avec Désavantage si la cible est au-delà de la portée normale mais en dessous de la portée longue.</p>
+                <p>Vous attaquez avec Désavantage si la cible est en mêlée avec vous.</p>
+            </div>
+            <div>
+                <h4 title="PHB 195">Attaque en mêlée</h4>
+                <p>La cible doit être à une distance inférieure ou égale à l’allonge de votre arme.</p>
+                <p>Quitter l’allonge de votre adversaire sans utiliser le Désengagement permet à l’adversaire d’utiliser sa réaction pour vous porter une attaque.</p>
+                <p><strong>Attaque à 2 armes:</strong> les 2 armes doivent être Légères. Attaquer avec la 2eme arme utilise votre action bonus et vous n’ajoutez pas le bonus aux dégâts (sauf s’il est négatif).</p>
+            </div>
+            <div>
+                <h4>Abri</h4>
+                <p><strong>Abri partiel</strong> (couvre la moitié du corps) : +2 CA et JS de Dex.</p>
+                <p><strong>Abri important</strong> (couvre 75% du corps) : +5 CA et JS Dex.</p>
+            </div>	
+        </div>
+        <div>
+            <h3 id="action">Action en combat</h3>
+            <div>
+                <h4 title="PHB 192">Aider</h4>
+                <p>Aider un allié à attaquer  1 adversaire.</p>
+                <p>Vous devez être en mêlée avec l’ennemie.</p>
+                <p>La prochaine attaque de votre allié se fera avec Avantage.</p>
+                <p>Aider s’applique aussi aux jets de compétence si la compétence est connue.</p>
+            </div>
+            <div>
+                <h4>Attaquer</h4>
+            </div>
+            <div>
+                <h4 title="PHB 195, DMG 272">Bousculer</h4>
+                <p>Utilise 1 attaque pour tenter de pousser  1 adversaire : Athlétisme vs Athlétisme ou Acrobaties.</p>
+                <p>Si vous gagnez, l’adversaire est repoussé de 1.5m ou tombe à terre (et aura un Désavantage sur les attaques pendant 1 round).</p>
+                <p>Si l’attaquant s’impose un Désavantage, il peut simplement déplacer la cible de 1.5m mais en restant à portée.</p>
+            </div>
+            <div>
+                <h4 title="PHB 192">Chercher</h4>
+                <p>Un test de Perception ou d’Investigation</p>
+            </div>
+            <div>
+                <h4 title="DMG 272">Culbuter</h4>
+                <p>Une action ou bonus action pour traverser l’emplacement d’un ennemi sans encombre.</p>
+                <p>Jet d’Acrobatie vs Acrobatie.</p>
+            </div>
+            <div>
+                <h4 title="DMG 271">Désarmer</h4>
+                <p>Jet d’Attaque vs Athlétisme ou Acrobatie. Si attaquant gagne, le défenseur est désarmé.</p>
+                <p>Désavantage pour l’attaquant si défenseur tiens l’objet à 2 mains.</p>
+                <p>La cible a l’avantage si elle est plus grande que l’attaquant.</p>
+                <p>La cible a 1 désavantage si elle est plus petite que l’attaquant.</p>
+            </div>
+            <div>
+                <h4 title="DMG 272">Dépasser <span class="english">(Overrun)</span></h4>
+                <p>1 action ou bonus action pour traverser l’emplacement d’un ennemi.</p>
+                <p>L’agresseur fait un Jet de d’Athlétisme vs Athlétisme de la cible.</p>
+                <ul>
+                    <li>En cas de succès, l’agresseur traverse l’emplacement sans encombre.</li>
+                    <li>En cas d’échec, la cible peut porter une attaque d’opportunité ou engager une lutte.</li>
+                </ul>
+                <p>L’agresseur a l’Avantage s’il est de plus grande taille.</p>
+                <p>L’agresseur a 1 Désavantage s’il est de plus petite taille.</p>
+            </div>
+            <div>
+                <h4 title="PHB 192">Désengager</h4>
+                <p>Permet de se déplacer pour quitter la mêlée sans provoquer d’attaque d’opportunité.</p>
+            </div>
+            <div>
+                <h4 title="PHB 192">Esquiver</h4>
+                <p>Les attaques contre vous se font avec Désavantage.</p>
+                <p>Avantage sur les Jets de Sauvegarde de Dextérité.</p>
+            </div>
+            <div>
+                <h4>Faire Trébucher <span class="english">(Trip attack)</span></h4>
+                <p>Jet d’Attaque vs Athlétisme ou Acrobatie.</p>
+                <p>Si attaquant gagne, le défenseur est projeté à terre.</p>
+                <p>La cible a l’Avantage si elle est plus grande que l’attaquant ou si elle a plus de 2 jambes.</p>
+                <p>La cible a 1 Désavantage si elle est plus petite que l’attaquant.</p>
+            </div>
+            <div>
+                <h4 title="DMG 271">Grimper sur une créature</h4>
+                <p>La cible doit être d'une catégorie de taille plus grande<p>
+                <p>Un test d'attaque vs [8 + cible attaque bonus]<p>                
+                <p>Jet d'Athlétisme ou Acrobatie vs Acrobatie (cible): en cas de succés, l'attaquant monte sur la cible<p>
+                <ul>
+                    <li>l'attaquant a avantage sur ses jets d'attaque contre la cible</li>
+                    <li>l'attaquant peut se déplacer sur la cible (considéré comme terrain difficile)</li>
+                    <li>selon la postion de l'attaquant sur la cible, celle ci peut l'attaquer plus ou moins facilement</li>
+                    <li>la cible peut tenter de déloger l'attaquant avec un jet opposé d'Athlétisme vs Athlétisme ou Acrobatie</li>
+                </ul>
+            </div>
+            <div>
+                <h4 title="PHB 192">Lancer un sort</h4>
+                <p>Lance un sort dont le temps d’incantation est d’une Action</p>
+            </div>
+            <div>
+                <h4 title="PHB 195">Lutter <span class="english">(Grapple)</span></h4>
+                <p>Utilise 1 attaque pour tenter d’attraper  1 adversaire : Athlétisme vs Athlétisme ou Acrobaties.</p>
+                <p>Si vous gagnez, la cible est dans la condition Empoigné.</p>
+                <p>Pour se libérer la cible doit réussir un test Athlétisme ou Acrobaties vs Athlétisme.</p>
+            </div>
+            <div>
+                <h4 title="PHB 192">Se Cacher</h4>
+                <p>Test de Discrétion.</p>
+            </div>
+            <div>
+                <h4 title="PHB 193">Se Préparer</h4>
+                <p>Décider d’une action à effectuer en fonction d’un déclencheur.</p>
+                <p>Quand le déclencheur se produit, vous pouvez utiliser votre réaction pour agir ou vous déplacer.</p>
+                <p>Préparer un sort nécessite de la concentration et peut donc être interrompue.</p>
+            </div>
+            <div>
+                <h4 title="PHB 192">Sprint</h4>
+                <p>Vous doublez votre mouvement pour ce round.</p>
+            </div>
+            <div>
+                <h4 title="PHB 193">Utiliser un objet</h4>
+                <p>Dégainer ou rengainer une arme, ranger ou sortir un objet d’un sac, ramasser un objet, ouvrir une porte...</p>
+            </div>
+        </div>
+        <div>
+            <h3 id="deplacement">Déplacement</h3>
+            <table class="table table-center table-large">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Allure</th>
+                        <th colspan="3">Distance parcourue par ...</th>
+                        <th rowspan="2">Effet</th>
+                    </tr>
+                    <tr>
+                        <th>Minute</th>
+                        <th>Heure</th>
+                        <th>Jour <span class="note">*</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rapide</td>
+                        <td>120 m</td>
+                        <td>6 km</td>
+                        <td>45 km</td>
+                        <td>-5 aux jets de Perception Passive</td>
+                    </tr>
+                    <tr>
+                        <td>Normale</td>
+                        <td>90 m</td>
+                        <td>4,5 km</td>
+                        <td>36 km</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Lente</td>
+                        <td>60 m</td>
+                        <td>3 km</td>
+                        <td>27 km</td>
+                        <td>Discrétion possible</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><span class="note">*</span> : pour 8 h de marche. Pour chaque heure au-delà de 8, les PJ doivent réussir un jet de Constitution DD (18 – nb heures de marche) ou gagner un niveau d’épuisement.</p>
+            <p>En terrain difficile, réduire les distances parcourues de moitié.</p>
+            <div>
+                <h4>Saut en longueur</h4>
+                <p>Avec 3 m d’élan, vous pouvez sauter jusqu’à une distance égale à votre score d’Athlétisme (en pieds).</p>
+                <p>Sans élan, la distance est divisée par 2.</p>
+                <p>Sur un terrain difficile, il faut réussir un jet d’Acrobatie DD 10 pour ne pas tomber au sol.</p>
+                <p>La distance parcourue en saut est soustraite à votre mouvement.</p>
+            </div>
+            <div>
+                <h4>Saut en hauteur</h4>
+                <p>Avec 3 m d’élan, vous pouvez décoller jusqu’à une hauteur de 3 + bonus For (+bonus de maîtrise si jet d’Athlétisme réussi) (en pieds).</p>
+                <p>Sans élan, la hauteur est divisée par 2.</p>
+                <p>La hauteur atteinte en saut est soustraite à votre mouvement.</p>
+            </div>
+        </div>
+        <div>
+            <h3 id="lumiere">Lumière et vision</h3>
+            <table class="table table-center table-large">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Allure</th>
+                        <th colspan="2">Distance de vision</th>
+                        <th rowspan="2">Durée</th>
+                    </tr>
+                    <tr>
+                        <th>Lumière claire</th>
+                        <th>Lumière faible</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bougie</td>
+                        <td>0 à 1,5 m</td>
+                        <td>1,5 à 3 m</td>
+                        <td>1 h</td>
+                    </tr>
+                    <tr>
+                        <td>Lampe</td>
+                        <td>0 à 4,5 m</td>
+                        <td>4,5 à 9 m</td>
+                        <td>6 h</td>
+                    </tr>
+                    <tr>
+                        <td>Torche</td>
+                        <td>0 à 6 m</td>
+                        <td>6 à 12 m</td>
+                        <td>1 h</td>
+                    </tr>
+                    <tr>
+                        <td>Lanterne à capote</td>
+                        <td>0 à 18 m (cône)</td>
+                        <td>18 à 36 m (cône)</td>
+                        <td>6 h</td>
+                    </tr>
+                    <tr>
+                        <td>Lanterne sourde</td>
+                        <td>0 à 9 m</td>
+                        <td>9 à 18 m</td>
+                        <td>6 h</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <h4>Obscurcissement</h4>
+                <p>Il y a 3 degrés d'obscurcissement: </p>
+                <ul>
+                    <li><strong>Aucun:</strong> vision normale.</li>
+                    <li><strong>Léger:</strong> désavantage sur les jets de Perception visuelle (Lumière faible, brume légère, végétation modérée).</li>
+                    <li><strong>Fort:</strong> considéré comme aveugle (ténèbres, fort brouillard, végétation dense).</li>
+                </ul>
+                <p>Le trait Vision dans le Noir réduit l’obscurcissement d’un cran.</p>
+            </div>
+        </div>
+        <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+    </section> 
+    <section>
+        <h2 id="soins">Dégâts et Soins</h2>
+        <div>
+            <h3 title="PHB 196">Jet de Dégâts</h3>
+            <p><strong>Coups critiques</strong> : lancer 2 fois les dés de dégâts puis ajouter 1 fois les modificateurs (les mêmes que ceux du jet pour toucher)</p>
+            <p>Option: lancez les dégats normalement et ajouter la valeur maximale des dés.</p>
+        </div>
+        <div>
+            <h3 title="PHB 196" id="types">Types de dégâts</h3>
+            <p>Voici la liste des différents types de dégâts.</p>
+            <ul>
+                <li title="Acid"><strong>Acide: </strong></li>
+                <li title="Bludgeoning"><strong>Contondant: </strong></li>
+                <li title="Fire"><strong>Feu: </strong></li>
+                <li title="Force"><strong>Force: </strong></li>
+                <li title="Lightning"><strong>Foudre: </strong></li>
+                <li title="Cold"><strong>Froid: </strong></li>
+                <li title="Necrotic"><strong>Nécrotique: </strong></li>
+                <li title="Piercing"><strong>Perforant: </strong></li>
+                <li title="Poison"><strong>Poison: </strong></li>
+                <li title="Psychic"><strong>Psychique: </strong></li>
+                <li title="Radiant"><strong>Radiant: </strong></li>
+                <li title="Thunder"><strong>Tonnerre: </strong></li>
+                <li title="Slashing"><strong>Tranchant: </strong></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Résistance</h3>
+            <p>Les dégâts subis sont réduits de moitié après que tous les autres modificateurs ont été appliqués.</p>
+            <p>Plusieurs résistances ne s’appliquent qu’une fois (non cumulatif)</p>
+        </div>
+        <div>
+            <h3>Vulnerabilité</h3>
+            <p>Les dégâts subis sont doublés après que tous les autres modificateurs ont été appliqués.</p>
+        </div>
+        <div>
+            <h3 title="PHB 197">Tomber à 0 pv</h3>
+            <p>Perte de conscience tant que l’on est à 0 PV & gagne 1 niveau d’épuisement.</p>
+            <p><strong>Mort instantannée:</strong> si les dégâts subis vous font tomber à –(max PV).</p>
+            <p><strong>JS vs la Mort:</strong> chaque tour que vous commencez à 0 PV, lancez 1d20 +[bonus Con] :</p>
+            <ul>
+                <li>1 = 2 échecs</li>
+                <li>2 à 9 = 1 échec</li>
+                <li>10 à 19 = 1 réussite</li>
+                <li>20 = récupère 1 PV</li>
+            </ul>
+            <p>Subir des dégâts quand on est à 0 PV => 1 échec (ou 2 échecs si c’est un critique).</p>
+            <p>Au bout de 3 échecs, vous mourrez.</p>
+            <p>Au bout de 3 réussites, vous êtes stabilisé.</p>
+            <p><strong>Stabiliser 1 créature</strong>: réussir 1 test de Médecine (DD=10) ou avoir 3 réussites au JS vs Mort.</p>
+            <p>1 créature stabilisé ne fait plus de JS vs Mort et récupère 1 PV au bout de 1d4 heures.</p>
+            <p>Si elle subit des dégâts, elle recommence à faire des JS vs Mort.</p>
+        </div>
+        <div>
+            <h3 title="PHB 198">Assommer</h3>
+            <p>Quand vous réduisez une créature à 0 PV, vous pouvez choisir de l’assommer plutôt que de la tuer. Elle est alors stabilisée.</p>
+        </div>
+        <div>
+            <h3 title="DMG 272">Enchainement</h3>
+            <p>Si une attaque réduit un ennemi de 100% PV à 0 PV en 1 coup, les dégâts supplémentaires peuvent être infligés à un autre ennemi adjacent si le jet d’attaque initial est suffisant.</p>
+            <p>Le processus peut se poursuivre tant qu’il reste des dégâts en trop et des ennemis à portée.</p>
+        </div>
+        <div>
+            <h3 title="DMG 272" id="graves">Blessures Graves</h3>
+            <p>Une blessure grave est infligée quand une créature :</p>
+            <ul>
+                <li>Subit un coup critique</li>
+                <li>Tombe à 0 PV sans mourir</li>
+                <li>Rate un JS vs Mort de 5 ou plus</li>
+            </ul>
+            <table class="table table-XL table-roll">
+                <thead>
+                    <tr>
+                        <th colspan="2">Table des Blessures Graves</th>
+                    </tr>
+                    <tr>
+                        <th>d20</th>
+                        <th>Effets de la blessure</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Perte d’un oeil</strong>: Désavantage sur les jets de Perception basé sur la vue et les jets d’attaque à distance. Les effets magiques de régénération peuvent soigner cette blessure. Si vous perdez vos 2 yeux, vous êtes aveugle.</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Perte d’un bras ou d’une main</strong>: Impossible de tenir un objet à 2 mains. Les effets magiques de régénération peuvent soigner cette blessure.</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Perte d’une jambe ou d’un pied</strong>: Vitesse à pied réduite de moitié et nécessite une béquille ou une prothèse pour se déplacer. Vous tombez à terre à la fin d’un Sprint. Désavantage sur les jets de Dextérité pour garder l’équilibre. Les effets magiques de régénération peuvent soigner cette blessure.</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Boitillement</strong>: Vitesse à pied réduite de 1.5 m. Doit réussir un jet de Dextérité DD 10 à la fin d’un Sprint pour rester debout. Les soins magiques soignent la Blessure.</td>
+                    </tr>
+                    <tr>
+                        <td>5-7</td>
+                        <td><strong>Blessure Interne</strong>: Doit réussir un JS de Constitution DD 15 pour agir normalement en combat. En cas d’échec, l’action est perdue et aucune réaction n’est possible jusqu’à votre prochain tour. Les soins magiques ou 10j de repos soignent la Blessure.</td>
+                    </tr>
+                    <tr>
+                        <td>8-10</td>
+                        <td><strong>Côte cassée</strong>: Même effets que Blessures Internes sauf que le JS se fait avec DD 10.</td>
+                    </tr>
+                    <tr>
+                        <td>11-13</td>
+                        <td><strong>Horrible Cicatrice</strong>: La Blessure vous défigure. Désavantage sur les jets de Persuasion. Avantage sur les jets d’Intimidation. Les soins magiques de niveau 6+ soignent la Blessure.</td>
+                    </tr>
+                    <tr>
+                        <td>14-16</td>
+                        <td><strong>Blessure Infectée</strong>: Votre maximum de PV baisse de 1 toutes les 24h ou la blessure n’est pas soignée. Si cela réduit vos PV max à 0, vous mourrez. Les soins magiques soignent la Blessure. Sans magie, un jet de Médecine DD 15 peut être fait toutes les 24h. Après 10 succès, la blessure est soignée.</td>
+                    </tr>
+                    <tr>
+                        <td>17-20</td>
+                        <td><strong>Cicatrice Mineure</strong>: Pas d’effet supplémentaire. Les soins magiques de niveau 6+ soignent la Blessure.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3 title="DMG 273" id="massifs">Dégâts Massifs</h3>
+            <p>Quand une créature subit des dégâts supérieurs à 50% de son max PV en 1 seul coup et que son max PV est supérieur à 30, elle doit réussir un JS Con (DD 15) ou subir un choc métabolique (cf table Choc Métabolique).</p>
+            <table class="table table-XL table-roll">
+                <thead>
+                    <tr>
+                        <th colspan="2">Table de Choc Métabolique</th>
+                    </tr>
+                    <tr>
+                        <th>1d10</th>
+                        <th>Effets du choc métabolique</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>La créature tombe à 0 PV.</td>
+                    </tr>
+                    <tr>
+                        <td>2-3</td>
+                        <td>La créature tombe à 0 PV mais est stable.</td>
+                    </tr>
+                    <tr>
+                        <td>4-5</td>
+                        <td>La créature est assomée jusqu’à la fin de son prochain tour.</td>
+                    </tr>
+                    <tr>
+                        <td>6-7</td>
+                        <td>La créature ne peut pas avoir de Réaction et est Désavantagée sur les jets d’attaque et d’abilités jusqu’à la fin de son prochain tour.</td>
+                    </tr>
+                    <tr>
+                        <td>8-10</td>
+                        <td>La créature ne peut pas avoir de Réaction jusqu’à la fin de son prochain tour.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3 title="PHB 186" id="repos">Repos</h3>
+            <p><strong>Court</strong> : au moins 30 min.</p>
+            <ul>
+                <li>Le PJ peut dépenser jusqu’à son bCon (min 1) en DV pour récupérer des pv (1DV + bCon/DV)</li>
+                <li>Il faut utiliser un Kit de soigneur ou réussir un test de Médecine pour pouvoir dépenser 1+ DV.</li>
+            </ul>
+            <p><strong>Long</strong> : au moins 8h dont 6h de sommeil.</p>
+            <ul>
+                <li>Les bénéfices ne peuvent être obtenus qu’une fois toutes les 24h et il faut avoir au moins 1 pv au début du repos pour en profiter.</li>
+                <li>Les DV non dépensé durant les repos court peuvent être dépensé à la fin du repos.</li>
+                <li>A la fin du repos, après avoir dépensé les DV restant, le PJ en regagne 50% de son maximum.</li>
+            </ul>
+        </div>
+        <div>
+            <h3 id="conditions">Conditions</h3>
+            <div>
+                <h4>A Terre <span class="english">(Prone)</span></h4>
+                <p>La seule option de mouvement possible pour une créature à terre est de ramper, à moins qu'elle ne se relève et mette alors un terme à la condition.</p>
+                <p>La créature a un désavantage aux jets d'attaque.</p>
+                <p>Un jet d'attaque contre la créature a un avantage si l'attaquant est à 1,50 mètre ou moins de la créature. Sinon, le jet d'attaque a un désavantage.</p>
+            </div>
+            <div>
+                <h4>Agrippé <span class="english">(Grappled)</span></h4>
+                <p>La vitesse d'une créature agrippée passe à 0, et elle ne peut bénéficier d'aucun bonus à sa vitesse.</p>
+                <p>La condition prend fin si la créature qui agrippe est incapable d'agir (voir la condition).</p>
+                <p>La condition se termine également si un effet met la créature agrippée hors de portée de la créature ou de l'effet qui l'agrippe, comme par exemple lorsqu'une créature est projetée par le sort onde de choc.</p>
+            </div>
+            <div>
+                <h4>Assourdi <span class="english">(Deafened)</span></h4>
+                <p>Une créature assourdie n'entend pas et rate automatiquement tout jet de caractéristique qui nécessite l’ouïe.</p>
+            </div>
+            <div>
+                <h4>Aveuglé <span class="english">(Blinded)</span></h4>
+                <p>Une créature aveuglée ne voit pas et rate automatiquement tout jet de caractéristique qui nécessite la vue.</p>
+                <p>Les jets d'attaque contre la créature ont un avantage, et les jets d'attaque de la créature ont un désavantage.</p>
+            </div>
+            <div>
+                <h4>Charmé <span class="english">(Charmed)</span></h4>
+                <p>Une créature charmée ne peut pas attaquer le charmeur ou le cibler avec des capacités ou des effets magiques nuisibles.</p>
+                <p>Le charmeur a un avantage à ses jets de caractéristique pour interagir socialement avec la créature.</p>
+            </div>
+            <div>
+                <h4>Effrayé <span class="english">(Frightened)</span></h4>
+                <p>Une créature effrayée a un désavantage aux jets de caractéristique et aux jets d'attaque tant que la source de sa peur est dans sa ligne de vue.</p>
+                <p>La créature ne peut se rapprocher volontairement de la source de sa peur.</p>
+            </div>
+            <div>
+                <h4>Empoisonné <span class="english">(Poisoned)</span></h4>
+                <p>Une créature empoisonnée a un désavantage aux jets d'attaque et aux jets de caractéristique.</p>
+            </div>
+            <div>
+                <h4>Entravé <span class="english">(Restrained)</span></h4>
+                <p>La vitesse d'une créature entravée passe à 0, et elle ne peut bénéficier d'aucun bonus à sa vitesse.</p>
+                <p>Les jets d'attaque contre la créature ont un avantage, et les jets d'attaque de la créature ont un désavantage.</p>
+                <p>La créature a un désavantage à ses jets de sauvegarde de Dextérité.</p>
+            </div>
+            <div>
+                <h4>Etourdi <span class="english">(Stunned)</span></h4>
+                <p>Une créature étourdie est incapable d'agir (voir la condition), ne peut plus bouger et parle de manière hésitante.</p>
+                <p>La créature rate automatiquement ses jets de sauvegarde de Force et de Dextérité.</p>
+                <p>Les jets d'attaque contre la créature ont un avantage.</p>
+            </div>
+            <div>
+                <h4>Inconscient <span class="english">(Unconscious)</span></h4>
+                <p>Une créature inconsciente est incapable d'agir (voir la condition), ne peut plus bouger ni parler, et n'est plus consciente de ce qui se passe autour d'elle.</p>
+                <p>La créature lâche ce qu'elle tenait et tombe à terre.</p>
+                <p>La créature rate automatiquement ses jets de sauvegarde de Force et de Dextérité.</p>
+                <p>Les jets d'attaque contre la créature ont un avantage.</p>
+                <p>Toute attaque qui touche la créature est un coup critique si l'attaquant est à 1,50 mètre ou moins de la créature.</p>
+            </div>
+            <div>
+                <h4>Invisible <span class="english">(Invisible)</span></h4>
+                <p>Une créature invisible ne peut être vue sans l'aide de la magie ou un sens particulier. En ce qui concerne le fait de se cacher, la créature est considérée dans une zone à visibilité nulle. L'emplacement de la créature peut être détecté par un bruit qu'elle fait ou par les traces qu'elle laisse.</p>
+                <p>Les jets d'attaque contre la créature ont un désavantage, et les jets d'attaque de la créature ont un avantage.</p>
+            </div>
+            <div>
+                <h4>Neutralisé <span class="english">(Incapacitated)</span></h4>
+                <p>Une créature incapable d'agir ne peut effectuer aucune action ni aucune réaction.</p>
+            </div>
+            <div>
+                <h4>Paralysé <span class="english">(Paralyzed)</span></h4>
+                <p>Une créature paralysée est incapable d'agir (voir la condition) et ne peut plus bouger ni parler.</p>
+                <p>La créature rate automatiquement ses jets de sauvegarde de Force et de Dextérité.</p>
+                <p>Les jets d'attaque contre la créature ont un avantage.</p>
+                <p>Toute attaque qui touche la créature est un coup critique si l'attaquant est à 1,50 mètre ou moins de la créature.</p>
+            </div>
+            <div>
+                <h4>Pétrifié <span class="english">(Pétrified)</span></h4>
+                <p>Une créature pétrifiée est transformée, ainsi que tout objet non magique qu'elle porte, en une substance inanimée solide (généralement en pierre). Son poids est multiplié par dix et son vieillissement cesse.</p>
+                <p>La créature est incapable d'agir (voir la condition), ne peut plus bouger ni parler, et n'est plus consciente de ce qui se passe autour d'elle.</p>
+                <p>Les jets d'attaque contre la créature ont un avantage.</p>
+                <p>La créature rate automatiquement ses jets de sauvegarde de Force et de Dextérité.</p>
+                <p>La créature obtient la résistance contre tous les types de dégâts.</p>
+                <p>La créature est immunisée contre le poison et la maladie, mais un poison ou une maladie déjà dans son organisme est seulement suspendu, pas neutralisé.</p>
+            </div>
+            <div>
+                <h3 id="epuisement">Epuisement</h3>
+                <p>L'épuisement se mesure en 6 niveaux, chacun ayant des effets cumulatifs.</p>
+                <p>Un effet qui supprime l'épuisement réduit son niveau tel que mentionné dans la description de l'effet, et tous les effets reliés à l'épuisement disparaissent si le niveau d'épuisement d'une créature est réduit à moins de 1.</p>
+                <p>Terminer un repos long réduit le niveau d'épuisement d'une créature de 1, à condition que la créature ait aussi mangé et bu. De même, être rappelé à la vie réduit le niveau d'épuisement d'une créature de 1.</p>
+                <table class="table table-center shadow rounded">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Table des niveaux d'épuisement</th>
+                        </tr>
+                        <tr>
+                            <th>Niveau</th>
+                            <th>Effets du niveau</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Désavantage aux jets de caractéristiques.</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Vitesse diminuée de moitié.</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Désavantage aux jets d'attaque et de sauvegarde.</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Points de vie maximums diminués de moitié.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Vitesse réduite à 0.</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Mort</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+    </section>    
+    <section>
+        <h2 id="caracteristique">Caractéristiques</h2>
+        <p>Il y a 6 caractéristiques pour définir un personnage.</p>
+        <p>Chaque attribut permet aussi de faire des Jets de Sauvegarde (JS) pour résister à certaines attaques.</p>
+        <p>Les modificateurs seront notés avec un 'b'. <span class="exemple"> Modificateur de Force = bFor</span></p>
+        <div>
+            <h3>Force (For)</h3>
+            <p>Mesure l'athlétisme inné, la puissance physique.</p>
+            <p>Important pour les attaques basées sur la force.</p>
+            <p><strong>Compétences: </strong>Athlétisme<p>
+        </div>
+        <div>
+            <h3>Dextérité (Dex)</h3>
+            <p>Mesure l'agilité physique, l'élégance, l'équilibre et les réflexes.</p>
+            <p>Important pour les attaques basées sur la précision et les vitesse, pour l'esquive et l'initiative.</p>
+            <p><strong>Compétences: </strong>Acrobaties, Discrétion, Escamotage<p>
+        </div>
+        <div>
+            <h3>Constitution (Con)</h3>
+            <p>Mesure l'endurance, la force vitale et la santé.</p>
+            <p>Important pour tout le monde, notamment pour pouvoir utiliser ses pouvoirs malgré la douleur.</p>
+        </div>
+        <div>
+            <h3>Intelligence (Int)</h3>
+            <p>Mesure l'esprit d'analyse, la sagacité et la mémorisation d'information.</p>
+            <p>Important pour les magiciens, les artificiers et les psions.</p>
+            <p><strong>Compétences: </strong>Arcanes, Histoire, Investigation, Nature, Religion<p>
+        </div>
+        <div>
+            <h3>Sagesse (Sag)</h3>
+            <p>Mesure l'intuition, la perspicacité et la conscience de son environnement.</p>
+            <p>Important pour la perception, ceux utilisant la magie divine (Clerc, Druide).</p>
+            <p><strong>Compétences: </strong>Dressage, Médecine, Perception, Perspicacité, Survie<p>
+        </div>
+        <div>
+            <h3>Charisme (Cha)</h3>
+            <p>Mesure la confiance en soi, l'éloquence et le sens du commandement.</p>
+            <p>Important pour les interactions sociales et les classes dont les pouvoirs sont innés (Barde, Ensorceleur, Sorcier).</p>
+            <p><strong>Compétences: </strong>Intimidation, Performance, Persuasion, Tromperie<p>
+        </div>
+        <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+    </section>
+    <section>
+        <h2 id="creation">Création de personnage</h2>
+        <ol>
+            <li><strong>Choisir une race</strong></li>
+            <li><strong>Choisir un historique</strong> (options de personnalisation dans XGtE, GoS).
+                <ul>
+                    <li>2 traits de personnalité (selon meilleure/pire caractéristique).</li>
+                    <li>1 idéal (selon alignement).</li>
+                    <li>1 lien.</li>
+                    <li>1 défaut.</li>
+                </ul>
+            </li>
+            <li><strong>Choisir une classe</strong></li>
+            <li><strong>Déterminer les caractéristiques</strong>
+            <ul>
+                <li>Lancer: Lancer 4d6, additioner les résultats en ignorant le score le plus faible. Répéter 6 fois et répartir dans les 6 caractéristiques.</li>
+                <li>Valeurs normalisées: répartir les valeurs suivantes: 8, 10, 12, 13, 14, 15.</li>
+            </ul>
+            <p>Appliquer les modificateurs raciaux.</p>
+            <p>Une caractéristique ne peut dépasser 20 (sauf exception).</p>
+            <p>Déterminer les modificateurs associés à chaque caractéristique (+1 pour 2 au dessus de 10, -1 pour 2 en dessous de 10).</p></li>
+            <li><strong>Description</strong>: physique et alignement.</li>
+            <li><strong>Equipement</strong>: choisissez une des options suivantes
+                <ul>
+                    <li>selon la Classe et Historique</li>
+                    <li>acheter équipement avec po selon la classe.</li>
+                </ul>
+            </li>
+        </ol>
+        <p><a href="#top" class="button btn btn-secondary">Haut de page</a></p>
+    </section>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}" defer></script>
+{% endblock %}

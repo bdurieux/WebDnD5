@@ -83,6 +83,16 @@ class CreatureController extends AppController{
             $creatures = $creatureRepo->findAllJoined();    
         }        
         
+        // get list of all first letter for side menu
+        $firstLetterList = [];
+        $firstLetter = '';
+        foreach($creatures as $creature){
+            if($creature['name'][0] != $firstLetter){
+                array_push($firstLetterList,$creature['name'][0]);
+                $firstLetter = $creature['name'][0];
+            }
+        }
+
         return $this->render('creatures/compendium.html.twig',[
             'message' => $message,
             'title' => $title,
@@ -91,7 +101,8 @@ class CreatureController extends AppController{
             'sources' => $sources,
             'types' => $types,
             'creatures' => $creatures,
-            'challengeXP' => self::CHALLENGE_XP
+            'challengeXP' => self::CHALLENGE_XP,
+            'firstLetterList' => $firstLetterList
         ]);
     }
 
@@ -138,7 +149,7 @@ class CreatureController extends AppController{
         
         $alignments = $alignmentRepo->findBy(array(),array('id' => 'ASC'));        
         $sizes = $sizeRepo->findBy(array(),array('hitDice' => 'ASC'));
-        $sources = $sourceRepo->findBy(array(),array('name' => 'ASC'));
+        $sources = $sourceRepo->findBy(array(),array('official' => 'DESC', 'name' => 'ASC'));
         $types = $typeRepo->findBy(array(),array('name' => 'ASC'));
    
         if($id === null){

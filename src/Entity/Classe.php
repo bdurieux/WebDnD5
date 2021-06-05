@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Classe
 {
-    //js: proficiency bonus = Math.floor(level/4.2 +2)
-
     /**
      * @var int
      *

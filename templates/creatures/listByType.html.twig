@@ -4,7 +4,7 @@
 <div class="center-item">
     <a href="{{ path('creature.compendium') }}" class="button btn btn-secondary">Compendium</a>
 </div>
-<div class="chk-opt">
+<div class="btn-list">
 	{% for type in types %}
 		<a href="{{ path('creature.compendium.type', { id: type.id }) }}" class="button btn btn-success">{{ type.name }}</a>
 	{% endfor %}
@@ -31,11 +31,11 @@
         <tbody>
         {% for creature in creatures %}
             <tr>
-                <td title="{{ creature.source }} {{ creature.page }}"><strong>{{ creature.name }}</strong></td>
-                <td>{{ creature.size }}</td>
-                <td title="{{ creature.challenge }}">{{ challengeXP[creature.challenge] }}</td>
-                <td>{{ creature.alignment }}</td>
-                <td>{{ creature.source }} {{ creature.page }}</td>
+                <td data-label=Nom title="{{ creature.source }} {{ creature.page }}"><strong>{{ creature.name }}</strong></td>
+                <td data-label=Taille>{{ creature.size }}</td>
+                <td data-label=CR title="{{ creature.challenge }}">{{ challengeXP[creature.challenge] }}</td>
+                <td data-label=Alignement>{{ creature.alignment }}</td>
+                <td data-label=Source>{{ creature.source }} {{ creature.page }}</td>
             </tr>
         {% endfor %}
         </tbody>

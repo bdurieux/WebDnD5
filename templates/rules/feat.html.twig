@@ -17,29 +17,29 @@
 {% endif %}
 <div class="center-item" id="filter-form" >
     {{ form_start(formFeat) }}
-    <div class="form-1 form-feat">    
+    <div class="form-1 form-flex size-XL">    
         {# name #}
-        <div class="feat-name"> 
+        <div class="frm-input"> 
             {{ form_row(formFeat.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
         </div>
         {# source #}
-        <div class="feat-src">   
+        <div class="frm-select">   
             {{ form_row(formFeat.idSource,{'attr': {'class': "form-control"}, 'label' : "Source"})}}
         </div>
         {# page #}
-        <div class="feat-page">  
+        <div class="frm-input">  
             {{ form_row(formFeat.page,{'attr': {'placeholder': "Page", 'class': "form-control"}, 'label' : "Page"})}} 
         </div>
         {# prerequisite #}
-        <div class="feat-prereq"> 
+        <div class="frm-input"> 
             {{ form_row(formFeat.prerequisite,{'attr': { 'placeholder': "Prérequis", 'class': "form-control"}, 'label' : "Prérequis"})}}
         </div>
         {# description #}
-        <div class="feat-desc"> 
+        <div class="frm-textarea"> 
             {{ form_row(formFeat.description,{'attr': { 'placeholder': "Description", 'class': "form-control"}, 'label' : "Description"})}}
         </div>        
         {# submit #}
-        <div class="feat-submit">   
+        <div class="frm-ok">   
             <button type="submit" class="btn btn-success" >
                 {% if editMode %}
                     Sauver

@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 id="top">Poison</h1>
+<section>
+    <h2 id="poison">Poison</h2>
+    <div>
+        <h3>Application de poison</h3>
+        <p>Appliquer une dose de poison sur une arme prend 1 action et le poison reste actif pendant 1 min (+1 min par bonus de maîtrise si le personnage maîtrise le kit d’empoisonneur).</p>
+        <p>A chaque fois que l’arme inflige des dégâts (perforants/tranchants), la cible est affectée par le poison.</p>
+        <p>Le DD du jet de sauvegarde est celui indiqué dans la description du poison (+ le bonus de maîtrise si le personnage maîtrise le kit d’empoisonneur).</p>
+        <p>Les poisons sont classés en différents types :</p>
+        <ul>
+            <li><strong>Blessure:</strong> Appliqué à des armes, des munitions, des pièges ou tout autre objet qui inflige des dégâts perforants ou tranchants.</li>
+            <li><strong>Contact:</strong> S'étale sur un objet et affecte une créature dès que sa peau touche le poison.</li>
+            <li><strong>Ingestion:</strong> Ce type de poison se place dans des aliments ou dans un liquide.</li>
+            <li><strong>Inhalation:</strong> Poudre ou gaz qui fait effet lorsqu'il est inhalé.</li>
+        </ul>
+    </div>
+    <div>
+        <h3>Préparation de poison</h3>
+        <p>La préparation se fait à l’aide d’un jet d’Intelligence (Nature) ou Intelligence (Arcanes), selon le type de poison.</p>
+        <p>Si le personnage n’a pas les compétences mais possède la maîtrise du kit d’empoisonneur, il applique son bonus de maîtrise aux jets.</p>
+        <p>Une fiole peut contenir jusqu’à 3 doses de poison.</p>
+        <table class="table table-XL">
+            <thead>
+                <tr>
+                    <th colspan="4">Table de préparation de poison</th>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <th>Prérequis</th>
+                    <th>Coût</th>
+                    <th>Temps</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label='Type'>Végétal</td>
+                    <td data-label='Prérequis'>Jet d'Intelligence (Nature) DD 15</td>
+                    <td data-label='Coût'>Aucun</td>
+                    <td data-label='Temps'>1d6 min</td>
+                </tr>
+                <tr>
+                    <td data-label='Type'>Venin</td>
+                    <td data-label='Prérequis'>Jet d'Intelligence (Nature) DD 20</td>
+                    <td data-label='Coût'>Aucun</td>
+                    <td data-label='Temps'>1d6 min</td>
+                </tr>
+                <tr>
+                    <td data-label='Type'>Toxine</td>
+                    <td data-label='Prérequis'>Jet d'Intelligence (Nature) DD 20 & maitrise des outils d'alchimiste</td>
+                    <td data-label='Coût'>50% du prix de vente</td>
+                    <td data-label='Temps'>1 j/ 50 po (prix de vente)</td>
+                </tr>
+                <tr>
+                    <td data-label='Type'>Mixture</td>
+                    <td data-label='Prérequis'>Jet d'Intelligence (Arcanes) DD 20 & lanceur de sorts niveau 3</td>
+                    <td data-label='Coût'>50% du prix de vente</td>
+                    <td data-label='Temps'>1 j/ 50 po (prix de vente)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h3>Acheter du poison</h3>
+        <p>Généralement des lois strictes interdisent la possession et l'utilisation de poison, mais un revendeur au marché noir ou un apothicaire peu scrupuleux peut en avoir secrètement en réserve.</p>
+        <p>Les personnages qui ont des contacts avec le milieu du crime devraient être en mesure de pouvoir relativement facilement acquérir un poison. Les autres pourraient avoir à faire des recherches approfondies et à payer des pots de vin pour pouvoir obtenir le poison qu'ils recherchent.</p>
+        <p>La description de chaque poison indique le prix suggéré pour une seule dose.</p>
+    </div>
+    <div>
+        <h3>Extraction des poisons naturels</h3>
+        <p>Un personnage peut tenter d’extraire le poison d’une créature.</p>
+        <p>La créature doit être Neutralisée ou morte et l’extraction prend 1d6 minute suivi d’un jet d’Intelligence (Nature) DD 20 (le bonus de maîtrise s’applique le personnage a la maîtrise du kit d’empoisonneur).
+            <ul>
+                <li>En cas de réussite, le personnage extrait assez de poison pour 1 dose.</li>
+                <li>En cas d’échec, l’extraction échoue et si l’échec est de plus de  5, le personnage subit l’effet du poison (uniquement sur 1 naturel si le personnage maîtrise le kit d’empoisonneur).</li>
+            </ul>
+        </p>
+    </div>
+    <div>
+        <h3>Effet du poison</h3>
+        <p>Une créature qui rate son jet de sauvegarde est empoisonnée (Désavantage sur jets d’attaque et de caractéristiques) tant que le poison fait effet.</p>
+        <p>Les dégâts sont de type poison.</p>
+        <p>(Succès = 50%) : signifie que les effets sont réduits de moitié en cas de succès au jet de sauvegarde.</p>
+    </div>
+    <table id="table_poison" class="table table-XL">
+            <thead>
+                <tr>
+                    <th colspan="5">Table des Poisons: effets et prix</th>
+                </tr>
+                <tr>
+                    <th onclick="getPoisonBySource()">Poison</th>
+                    <th onclick="getPoisonByApplication()">Application</th>
+                    <th onclick="getPoisonByType()">Type</th>
+                    <th onclick="getPoisonByPrix()">Prix</th>
+                    <th>Effets</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+</section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/poison.js') }}"></script>
+{% endblock %}

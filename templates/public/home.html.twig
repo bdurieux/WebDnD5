@@ -1,25 +1,88 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <h1>Donjons & Dragons 5e</h1>
+<section class="sidenav" id="side_menu">
+    <button class="dropdown-btn">
+        <a href="#top">Top</a>
+        {# <i class="fa fa-caret-down"></i> #}
+    </button>
+    <div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#liens">Liens utiles</a>
+        {# <i class="fa fa-caret-down"></i> #}
+    </button>
+    <div class="dropdown-container">
+        <a href="#aides">Aides de jeux</a>
+        <a href="#divers">Divers sites</a>
+        <a href="#forums">Forums</a>
+        <a href="#youtube">Youtube</a>
+        <a href="#musique">Musique</a>
+    </div>
+    <button class="dropdown-btn">
+        <a href="#supplements">Suppléments</a>
+        {# <i class="fa fa-caret-down"></i> #}
+    </button>
+    <div class="dropdown-container">
+        <a href="#sources">Sources</a>
+    </div>
+</section>
 <p>Ce site a pour but de servir de référence pour les joueurs de Donjons & Dragons 5e des parties que j'organise afin de retrouver rapidement un point de règles, un sort, etc....</p>
-<p>Liste des dons</p>
-<p>Liste des créatures des différents bestiaires</p>
-<p>Convertisseur d'unité Impériales-SI</p>
 <div>
-    <h2>Liens utiles</h2>
+    <h2 id="liens">Liens utiles</h2>
     <div>
-        <h3>Divers sites</h3>
+        <h3 id="aides">Aides de jeux en ligne</h3>
+        <div>
+            <h4><a href="https://www.aidedd.org/">AideDD (FR)</a></h4>
+            <p>Site de référence des ressources officielles (races, classes, sorts, objets magiques ...).</p>
+        </div>
+        <div>
+            <h4><a href="http://easydamus.com/alignment.html">Alignment (EN)</a></h4>
+            <p>Description des différents alignements.</p>
+        </div>
+        <div>
+            <h4><a href="https://5e.tools/5etools.html">5Etools (EN)</a></h4>
+            <p>Site de référence des ressources officielles (races, classes, sorts, objets magiques ...).</p>
+        </div>
+        <div>
+            <h4><a href="https://open5e.com/">Open 5e (EN)</a></h4>
+            <p>Site de référence des ressources officielles (bestiaire, races, classes, sorts, objets magiques ...).</p>
+        </div>
+    </div>
+    <div>
+        <h3 id="divers">Divers sites</h3>
+        <div>
+            <h4><a href="https://loremaps.azurewebsites.net/Maps/Faerun">Carte de Faerun (EN)</a></h4>
+            <p>Carte des Royaumes Oubliés.</p>
+        </div>
+        <div>
+            <h4><a href="https://loremaps.azurewebsites.net/Maps/Faerun">Vaults of Pandius (EN)</a></h4>
+            <p>Site 'officiel' pour le cadre de campagne de Mystara.</p>
+        </div>
+        <div>
+            <h4><a href="https://tetra-cube.com/dnd/dnd-statblock.html">D&D statblock (EN)</a></h4>            
+            <p>Générateur de modèle de créature (sur le style du Monster Manual), de PJ et d'objets magiques.</p>
+        </div>
+        <div>
+            <h4><a href="http://donjon.bin.sh/5e/">Donjon (EN)</a></h4>            
+            <p>Générateurs aléatoire de trésor, de carte de donjon, de rencontres. Liste de trésor, de monstres.</p>
+        </div>
+        <div>
+            <h4><a href="https://www.fantasynamegenerators.com/">Fantasy Name Generator (EN)</a></h4>            
+            <p>Générateur aléatoire de trésor, de grimoire, ...</p>
+        </div>
         <div>
             <h4><a href="http://rolladvantage.com/tokenstamp/">Rolladvantage (EN)</a></h4>
             <p>Création de token simple et rapide.</p>
         </div>
         <div>
-            <h4><a href="https://www.fantasynamegenerators.com/">Fantasy Name Generator (EN)</a></h4>
+            <h4><a href="http://redkatart.com/dnd5tools/">Redkat's 5e D&D (EN)</a></h4> 
             <p>Générateur de nom de créature ou lieu de tout type.</p>
-        </div>
+        </div>        
     </div>
     <div>
-        <h3>Forums</h3>
+        <h3 id="forums">Forums</h3>
         <div>
             <h4><a href="https://www.dndbeyond.com/forums">DnD Beyond (EN)</a></h4>
             <p>D&D 5e. Forum de conseils et d'optimisation de DnD Beyond.</p>
@@ -30,7 +93,7 @@
         </div>
     </div>
     <div>
-        <h3>Youtube</h3>     
+        <h3 id="youtube">Youtube</h3>     
         <div>
             <h4><a href="https://www.youtube.com/channel/UCD6ERRdXrF2IZ0R888G8PQg">Dungeon Craft (EN)</a></h4>
             <p>Conseils et astuces au MJ (idées extrèmes). D&D 5e.</p>
@@ -65,7 +128,7 @@
         </div>
         <div>
             <h4><a href="https://www.youtube.com/channel/UCr7N1om5-7UemjK_stlAuTw">Treantmonk's Temple (EN)</a></h4>
-            <p>D&D 5e. Chaine d'optimisation. Compare en argumantant la valeur des différentes classes, sorts, etc...</p>
+            <p>D&D 5e. Chaine d'optimisation. Compare l'efficacité des différentes classes, sorts, etc...</p>
         </div>
         <div>
             <h4><a href="https://www.youtube.com/user/WASD20Nate">WASD20 (EN)</a></h4>
@@ -81,11 +144,71 @@
         </div>
     </div>
     <div>
-        <h3>Musique</h3>
+        <h3 id="musique">Musique</h3>
         <div>
             <h4><a href="https://www.youtube.com/channel/UCa3SDs8cPme7tD9S8BIVYrw">Everness (EN)</a></h4>
             <p>Chaine youtube avec les musique de Skyrim, WoW.</p>
         </div>
     </div>
 </div>
+<div>
+    <h2 id="supplements">Suppléments non officiels utilisés</h2>
+    <div>
+        <h4>Book of Lost Spells (Necromancer Games)</h4>
+        <p>708 sorts pour toutes les classes.</p>
+    </div>
+    <div>
+        <h4>Deep Magic series (Kobold Press)</h4>
+        <p>Série de 20 suppléments. 1 thème par supplément (magie runique, des sceaux, du temps, élémentaire, du vide ...).</p>
+        <p>Règles de magie (sous classes, sorts ...) pour des thèmes particuliers.</p>
+    </div>
+    <div>
+        <h4>Faiths of the Forgotten Realms Vol 1 & 2 (Pyromaniac Press)</h4>
+        <p>Détails sur les principaux cultes des Royaumes Oubliés (plus de 60, pour les principales races des royaumes).</p>
+        <p>2 sous classes (clerc, paladin en général) et quelques sorts pour chaque divinité.</p>
+    </div>
+    <div>
+        <h4>Hamund's Harvesting Handbook Vol 1 & 2 (Drifter's Game Workshop)</h4>
+        <p>Règles pour récolter des morceaux de créatures et en faire de l'équipement (magique ou non).</p>
+    </div>
+    <div>
+        <h4>Mystara Player's Handbook (DM Guild)</h4>
+        <p>Cadre de Campagne pour jouer sur Mystara.</p>
+        <p>25+ sous classes, races spécifiques, sorts ...</p>
+    </div>
+    <div>
+        <h4>Psion's Primer (The Korranberg Chronicle)</h4>
+        <p>Règles sur les pouvoirs psi.</p>
+        <p>2 classes (Empath & Psion).</p>
+        <p>9 sous-classes (3 Empath, 3 psion, 1 fighter, 1 monk, 1 rogue).</p>
+    </div>
+    <div>
+        <h4>The Complete Armorer's Handbook (Heavyarms)</h4>
+        <p>Amélioration d'armes et armures.</p>
+        <p>Pierres runiques.</p>
+    </div>
+    <div>
+        <h4>The Great Dale Campagn Guide (DM Guild)</h4>
+        <p>Cadre de Campagne pour jouer dans l'est des Royaumes Oubliés (entre Impiltur, Narfell, Rashemen et Thesk; nord ouest de Thay).</p>
+        <p>11 sous classes, 18 sorts ...</p>
+    </div>
+</div>
+<div>
+    <button onclick="toggleElement(src)" class="btn btn-secondary" id="sources">Source:</button>
+    <div class="toggle-off" id="src">
+        <p>Sources officielles / <span class="unofficial">non-officielles</span>
+            <ul>
+            {% for source in sources %}
+                <li {% if source.official == 0 %}
+                        class="unofficial"
+                    {% endif %}><strong>{{ source.label }}: </strong>{{ source.name }}</li>
+            {% endfor %}
+            </ul>
+        </p>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}" defer></script>
 {% endblock %}

@@ -1,7 +1,23 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <h1 class="center-item">Creature Compendium</h1>
-<div class="chk-opt">
+<section class="sidenav" id="side_menu">
+	<button class="dropdown-btn top-link">
+        <a href="#top">Top</a>
+    </button>
+    <div class="dropdown-container top-link">
+        <a href="#"></a>
+    </div>
+{% for letter in firstLetterList %}
+	<button class="dropdown-btn">
+        <a href="#{{ letter }}">{{ letter }}</a>
+    </button>
+	<div class="dropdown-container">
+        <a href="#"></a>
+    </div>
+{% endfor %}
+</section>
+<div class="btn-list">
 	{% for type in types %}
 		<a href="{{ path('creature.compendium.type', { id: type.id }) }}" class="button btn btn-success">{{ type.name }}</a>
 	{% endfor %}
@@ -35,7 +51,7 @@
 			{% for source in sources %}
 			<div class="chk-opt">
 				<input type="checkbox" id="{{ source.id }}" name="creasource[]" value="{{ source.id }}" class="form-control" checked>
-    			<label for="{{ source.id }}">{{ source.label }}</label>
+    			<label for="{{ source.id }}" title="{{ source.name }}">{{ source.label }}</label>
 			</div>
 			{% endfor %}
 		</div>
@@ -64,13 +80,23 @@
             </tr>
         </thead>
         <tbody>
+		{% set link = '' %}
+		{% set newFirstLetter = false %}
         {% for creature in creatures %}
+			{% if link != creature.name|first %}
+				{% set link = creature.name|first %}
+				{% set newFirstLetter = true %}
+			{% endif %}
             <tr>
-                <td data-label=”Nom” title="{{ creature.source }} {{ creature.page }}"><strong>{{ creature.name }}</strong></td>
-                <td data-label=”Type”>{{ creature.type }}</td>
-                <td data-label=”Taille”>{{ creature.size }}</td>
-                <td data-label=”CR” title="{{ creature.challenge }}">{{ challengeXP[creature.challenge] }}</td>
-                <td data-label=”Alignement”>{{ creature.alignment }}</td>
+                <td {% if newFirstLetter %}
+					id="{{ link }}" 
+					{% set newFirstLetter = false %}
+				{% endif %}
+				data-label=Nom title="{{ creature.source }} {{ creature.page }}"><strong>{{ creature.name }}</strong></td>
+                <td data-label=Type>{{ creature.type }}</td>
+                <td data-label=Taille>{{ creature.size }}</td>
+                <td data-label=CR title="{{ creature.challenge }}">{{ challengeXP[creature.challenge] }}</td>
+                <td data-label=Alignement>{{ creature.alignment }}</td>
             </tr>
         {% endfor %}
         </tbody>

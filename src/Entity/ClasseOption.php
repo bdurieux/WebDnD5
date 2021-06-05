@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ClasseOption
  *
  * @ORM\Table(name="classe_option", indexes={@ORM\Index(name="FK_class_option_class_id", columns={"id_class"})})
- * @ORM\Entity(repositoryClass="App\Repository\ClasseOptionRepository")
+ * @ORM\Entity
  */
 class ClasseOption
 {
@@ -43,13 +43,9 @@ class ClasseOption
     private $level;
 
     /**
-     * @var \Classe
+     * @var int
      *
-     * 
-     * @ORM\ManyToOne(targetEntity="Classe")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_class", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="id_class", type="integer", nullable=false)
      */
     private $idClass;
 
@@ -94,12 +90,12 @@ class ClasseOption
         return $this;
     }
 
-    public function getIdClass(): ?Classe
+    public function getIdClass(): ?int
     {
         return $this->idClass;
     }
 
-    public function setIdClass(?Classe $idClass): self
+    public function setIdClass(int $idClass): self
     {
         $this->idClass = $idClass;
 

@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="center-item">Historiques</h1>
+<h2 class="center-item">
+    <button class="btn btn-secondary" onclick="toggleForm()">
+    {% if editMode %}
+        Modifier l'historique
+    {% else %}
+        Nouvel historique
+    {% endif %}
+    </button>
+</h2>
+{% if message|length > 0 %}
+	<div class="alert alert-danger">
+		{{ message|raw }}
+	</div>
+{% endif %}
+<div class="center-item" id="filter-form" >
+    {{ form_start(formBackground) }}
+    <div class="form-1 form-flex size-XL">    
+        {# name #}
+        <div class="frm-input"> 
+            {{ form_row(formBackground.name,{'attr': { 'placeholder': "Nom", 'class': "form-control"}, 'label' : "Nom"})}}
+        </div>
+        {# skills #}
+        <div class="frm-input"> 
+            {{ form_row(formBackground.skills,{'attr': { 'placeholder': "Compétences maitrisées", 'class': "form-control"}, 'label' : "Compétences"})}}
+        </div>
+        {# tools #}
+        <div class="frm-input"> 
+            {{ form_row(formBackground.tools,{'attr': { 'placeholder': "Outils maitrisés", 'class': "form-control"}, 'label' : "Outils"})}}
+        </div>
+        {# languages #}
+        <div class="frm-input"> 
+            {{ form_row(formBackground.languages,{'attr': { 'placeholder': "Langues maitrisées", 'class': "form-control"}, 'label' : "Langues"})}}
+        </div>
+        {# gear #}
+        <div class="frm-input"> 
+            {{ form_row(formBackground.gear,{'attr': { 'placeholder': "Equipement", 'class': "form-control"}, 'label' : "Equipement"})}}
+        </div>
+        {# featureName #}
+        <div class="frm-input"> 
+            {{ form_row(formBackground.featureName,{'attr': { 'placeholder': "Compétences maitrisées", 'class': "form-control"}, 'label' : "Aptitude"})}}
+        </div>
+        {# feature #}
+        <div class="frm-textarea"> 
+            {{ form_row(formBackground.feature,{'attr': { 'placeholder': "Compétences maitrisées", 'class': "form-control"}, 'label' : "Description"})}}
+        </div>
+        {# source #}
+        <div class="frm-select">   
+            {{ form_row(formBackground.idSource,{'attr': {'class': "form-control"}, 'label' : "Source"})}}
+        </div>
+        {# page #}
+        <div class="frm-input">  
+            {{ form_row(formBackground.page,{'attr': {'placeholder': "Page", 'class': "form-control"}, 'label' : "Page"})}} 
+        </div>      
+        {# submit #}
+        <div class="frm-ok">   
+            <button type="submit" class="btn btn-success" >
+                {% if editMode %}
+                    Sauver
+                {% else %}
+                    Ajouter
+                {% endif %}
+            </button>
+        </div>
+    </div>
+    {{ form_end(formBackground) }}
+</div>
+{% if not editMode %}
+<div>
+    <table class="table table-center col-3 table-XL table-font">
+        <thead>
+            <tr>
+                <th colspan="4">Listes des historiques ({{ backgrounds|length }})</th>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Compétences</th>
+                <th>Aptitude</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for background in backgrounds %}
+            <tr>
+                <td title="{{ background.idsource.label }} {{ background.page }}"><strong>{{ background.name }}</strong></td>
+                <td>{{ background.skills }}</td>
+                <td>{{ background.featureName }}</td>
+                <td class="inline-content center-item">
+                    <div class="">
+                        <a href="{{ path('background', { id: background.id })}}" class="button btn btn-primary" >
+                        <strong>Modifier</strong>
+                        </a>               
+                    </div>
+                    <form method="post" class="">
+                        <div class="">   
+                            <input type="hidden" name="background_del" value="{{ background.id }}" />
+                        </div>
+                        <div class="">   
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}
